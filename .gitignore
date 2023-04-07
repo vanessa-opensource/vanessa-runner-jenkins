@@ -1,6 +1,7 @@
 .idea/
 .gradle/
 .vscode/
+bin/
 build/
 gradle/
 work/ 
