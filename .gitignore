@@ -1,0 +1,8 @@
+.idea/
+.gradle/
+.vscode/
+build/
+gradle/
+work/ 
+gradlew.bat
+gradlew
