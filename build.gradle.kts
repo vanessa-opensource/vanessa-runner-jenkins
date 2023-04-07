@@ -13,9 +13,7 @@ jenkinsPlugin {
     setProperty("jenkinsVersion", "2.375")
 
     displayName = "Vanessa-runner tool support"
-
-    description = "Provide steps ant tools for vanessa-runner"
-    gitHubUrl = "https://github.com/vanessa-opensource/vanessa-runner"
+    gitHubUrl = "https://github.com/vanessa-opensource/vanessa-runner-jenkins"
 
     dependencies {
         implementation("org.jenkins-ci.plugins.workflow", "workflow-step-api", "639.v6eca_cd8c04a_a_")
