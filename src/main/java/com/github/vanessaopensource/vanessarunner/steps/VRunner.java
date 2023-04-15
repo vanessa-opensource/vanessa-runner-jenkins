@@ -1,6 +1,5 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import lombok.Getter;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -14,50 +13,32 @@ abstract public class VRunner extends Step {
     public static final String ENV_STORAGE_USER = "RUNNER_STORAGE_USER";
     public static final String ENV_STORAGE_PWD = "RUNNER_STORAGE_PWD";
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String ibConnection;
+    String ibConnection;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String databaseCredentialsID;
+    String databaseCredentialsID;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String ucCode;
+    String ucCode;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String v8Version;
+    String v8Version;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean noCacheUse;
+    Boolean noCacheUse;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String additional;
+    String additional;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean ordinaryApp;
+    Boolean ordinaryApp;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String language;
+    String language;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String locale;
+    String locale;
 
     public VRunner() {
     }

@@ -3,7 +3,6 @@ package com.github.vanessaopensource.vanessarunner.steps;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
-import lombok.Getter;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -11,50 +10,32 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class InitDevStep extends VRunner {
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String src;
+    String src;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String dt;
+    String dt;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean dev;
+    Boolean dev;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean storage;
+    Boolean storage;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String storageName;
+    String storageName;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String storageCredentialsID;
+    String storageCredentialsID;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Integer storageVer;
+    Integer storageVer;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean v1;
+    Boolean v1;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean v2;
+    Boolean v2;
 
     @DataBoundConstructor
     public InitDevStep() {
@@ -96,20 +77,20 @@ public class InitDevStep extends VRunner {
         public void addCommandContext(VRunnerContext context) throws AbortException {
 
             context.setCommand("init-dev");
-            context.addParameter(step.getSrc(), "--src");
-            context.addParameter(step.getDt(), "--dt");
-            context.addSwitch(step.getDev(), "--dev");
-            context.addSwitch(step.getStorage(), "--storage");
-            context.addParameter(step.getStorageName(), "--storage-name");
+            context.addParameter(step.src, "--src");
+            context.addParameter(step.dt, "--dt");
+            context.addSwitch(step.dev, "--dev");
+            context.addSwitch(step.storage, "--storage");
+            context.addParameter(step.storageName, "--storage-name");
             argStorageVer(context);
-            context.addSwitch(step.getV1(), "--v1");
-            context.addSwitch(step.getV2(), "--v2");
+            context.addSwitch(step.v1, "--v1");
+            context.addSwitch(step.v2, "--v2");
 
-            context.addCredentialsEnv(step.getStorageCredentialsID(), VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
+            context.addCredentialsEnv(step.storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
         }
 
         private void argStorageVer(VRunnerContext context) {
-            var storageVer = step.getStorageVer();
+            var storageVer = step.storageVer;
             if (storageVer == null || storageVer == 0) {
                 return;
             }

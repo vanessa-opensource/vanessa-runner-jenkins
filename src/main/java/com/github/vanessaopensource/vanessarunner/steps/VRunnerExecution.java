@@ -29,16 +29,16 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
 
         addCommandContext(context);
 
-        context.addParameter(step.getIbConnection(), "--ibconnection");
-        context.addParameter(step.getUcCode(), "--uccode");
-        context.addParameter(step.getV8Version(), "--v8version");
-        context.addSwitch(step.getNoCacheUse(), "--nocacheuse");
-        context.addParameter(step.getAdditional(), "--additional");
+        context.addParameter(step.ibConnection, "--ibconnection");
+        context.addParameter(step.ucCode, "--uccode");
+        context.addParameter(step.v8Version, "--v8version");
+        context.addSwitch(step.noCacheUse, "--nocacheuse");
+        context.addParameter(step.additional, "--additional");
         argOrdinaryApp(context);
-        context.addParameter(step.getLanguage(), "--language");
-        context.addParameter(step.getLocale(), "--locale");
+        context.addParameter(step.language, "--language");
+        context.addParameter(step.locale, "--locale");
 
-        context.addCredentialsEnv(step.getDatabaseCredentialsID(), VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);
+        context.addCredentialsEnv(step.databaseCredentialsID, VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);
 
         executeVRunner(context);
 
@@ -61,7 +61,7 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
     }
 
     private void argOrdinaryApp(VRunnerContext context) {
-        var ordinaryApp = step.getOrdinaryApp();
+        var ordinaryApp = step.ordinaryApp;
         if (ordinaryApp == null) {
             return;
         }

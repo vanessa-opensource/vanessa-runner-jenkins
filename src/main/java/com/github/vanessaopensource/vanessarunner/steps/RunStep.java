@@ -2,7 +2,6 @@ package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
-import lombok.Getter;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -10,30 +9,20 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class RunStep extends VRunner {
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String command;
+    String command;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String execute;
+    String execute;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private Boolean noWait;
+    Boolean noWait;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String onlineFile;
+    String onlineFile;
 
-    @Getter
     @DataBoundSetter
-    @SuppressWarnings("unused")
-    private String exitCodePath;
+    String exitCodePath;
 
     @DataBoundConstructor
     public RunStep() {
@@ -59,11 +48,11 @@ public class RunStep extends VRunner {
         @Override
         public void addCommandContext(VRunnerContext context) {
             context.setCommand("run");
-            context.addParameter(step.getCommand(), "--command");
-            context.addParameter(step.getExecute(), "--execute");
-            context.addSwitch(step.getNoWait(), "--no-wait");
-            context.addParameter(step.getOnlineFile(), "--online-file");
-            context.addParameter(step.getExitCodePath(), "--exitCodePath");
+            context.addParameter(step.command, "--command");
+            context.addParameter(step.execute, "--execute");
+            context.addSwitch(step.noWait, "--no-wait");
+            context.addParameter(step.onlineFile, "--online-file");
+            context.addParameter(step.exitCodePath, "--exitCodePath");
         }
     }
 

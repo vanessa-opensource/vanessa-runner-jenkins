@@ -13,10 +13,12 @@ public class InitDevStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerInitDev src:'%s', noCacheUse:%b, language:'%s'",
-                "src/cf", true, "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new InitDevStep();
+        step.src = "src/cf";
+        step.noCacheUse = true;
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
 
@@ -36,10 +38,13 @@ public class InitDevStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerInitDev src:'%s', dev:%b, noCacheUse:%b, language:'%s'",
-                "src/cf", true, true, "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new InitDevStep();
+        step.src = "src/cf";
+        step.dev = true;
+        step.noCacheUse = true;
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
 
@@ -58,10 +63,13 @@ public class InitDevStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerInitDev src:'%s', ibConnection:'%s', noCacheUse:%b, language:'%s'",
-                "src/cf", "/Fbuild/base1", true, "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new InitDevStep();
+        step.src = "src/cf";
+        step.ibConnection = "/Fbuild/base1";
+        step.noCacheUse = true;
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
 
@@ -81,10 +89,12 @@ public class InitDevStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerInitDev dt:'%s', noCacheUse:%b, language:'%s'",
-                "bin/1Cv8.dt", true, "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new InitDevStep();
+        step.dt = "bin/1Cv8.dt";
+        step.noCacheUse = true;
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
 
@@ -103,14 +113,16 @@ public class InitDevStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        VRunnerRule.provideCredentialsAdministratorEmpty();
-        var command = String.format("vrunnerInitDev storage:%b, storageName:'%s', storageCredentialsID:'%s', " +
-                        "noCacheUse:%b, language:'%s'",
-                true, "bin/storage", VRunnerRule.CREDS_ADMINISTRATOR_EMPTY,
-                true, "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new InitDevStep();
+        step.storage = true;
+        step.storageName = "bin/storage";
+        step.storageCredentialsID = VRunnerRule.CREDS_ADMINISTRATOR_EMPTY;
+        step.noCacheUse = true;
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
+        VRunnerRule.provideCredentialsAdministratorEmpty();
         VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
 
         // when

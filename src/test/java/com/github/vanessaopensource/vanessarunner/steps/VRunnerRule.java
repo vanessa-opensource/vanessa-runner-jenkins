@@ -16,6 +16,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Extension
@@ -46,6 +47,12 @@ public class VRunnerRule {
     }
 
     @NonNull
+    public WorkflowJob createWorkFlowJob(VRunner step) throws IOException {
+        var script = new CommandBuilder(step).buildScript();
+        return createWorkFlowJob(script);
+    }
+
+    @NonNull
     public FilePath createWorkSpace(WorkflowJob job) throws IOException, InterruptedException {
 
         var workspace = jenkins.getWorkspaceFor(job);
@@ -65,12 +72,6 @@ public class VRunnerRule {
 
     public static void assertChildFileExists(String child, FilePath filePath) throws IOException, InterruptedException {
         assert filePath.child(child).exists();
-    }
-
-    @NonNull
-    public static String buildScript(String command) {
-        var template = "node { env.LOGOS_LEVEL='INFO'; %s }";
-        return String.format(template, command);
     }
 
     public static void provideCredentialsAdministratorEmpty() {

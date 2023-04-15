@@ -14,10 +14,12 @@ public class RunStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerRun execute:'%s', ibConnection: '%s', language: '%s'",
-                "$runnerRoot/epf/ЗакрытьПредприятие.epf", "/Fbuild/ib", "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new RunStep();
+        step.execute = "$runnerRoot/epf/ЗакрытьПредприятие.epf";
+        step.ibConnection = "/Fbuild/ib";
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(RunStepTest.class, workSpace);
 
@@ -35,15 +37,15 @@ public class RunStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        VRunnerRule.provideCredentialsAdministratorEmpty();
-        var command = String.format("vrunnerRun execute:'%s', ibConnection: '%s', " +
-                        "databaseCredentialsID:'%s',language: '%s'",
-                "$runnerRoot/epf/ЗакрытьПредприятие.epf", "/Fbuild/ib",
-                VRunnerRule.CREDS_ADMINISTRATOR_EMPTY, "en");
+        var step = new RunStep();
+        step.execute = "$runnerRoot/epf/ЗакрытьПредприятие.epf";
+        step.databaseCredentialsID = VRunnerRule.CREDS_ADMINISTRATOR_EMPTY;
+        step.ibConnection = "/Fbuild/ib";
+        step.language = "en";
 
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
+        VRunnerRule.provideCredentialsAdministratorEmpty();
         VRunnerRule.createLocalData(RunStepTest.class, workSpace);
 
         // when

@@ -13,10 +13,12 @@ public class CompileCfeStepTest {
         var r = VRunnerRule.createRule(j);
 
         // given
-        var command = String.format("vrunnerCompileCfe src:'%s', out:'%s', language:'%s'",
-                "src/cfe", "1cv8.cfe", "en");
-        var script = VRunnerRule.buildScript(command);
-        var job = r.createWorkFlowJob(script);
+        var step = new CompileCfeStep();
+        step.src = "src/cfe";
+        step.out = "1cv8.cfe";
+        step.language = "en";
+
+        var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
         VRunnerRule.createLocalData(CompileCfeStepTest.class, workSpace);
 
