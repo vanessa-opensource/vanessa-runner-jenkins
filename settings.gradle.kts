@@ -1,2 +1,2 @@
-rootProject.name = " vanessa-runner-plugin"
+rootProject.name = "vanessa-runner-plugin"
 
