@@ -40,6 +40,9 @@ abstract public class VRunner extends Step {
     @DataBoundSetter
     String locale;
 
+    @DataBoundSetter
+    String settings;
+
     public VRunner() {
     }
 

@@ -2,18 +2,19 @@ package com.github.vanessaopensource.vanessarunner.steps;
 
 import hudson.AbortException;
 
+import hudson.model.Result;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecution<Integer> {
 
     private transient final VRunner step;
 
-    protected final Set<Integer> ignoredExitCodes = new HashSet<>();
+    protected final Map<Integer, Result> exitCodes = new HashMap<>();
 
     public VRunnerExecution(StepContext context, VRunner step) {
         super(context);
@@ -37,6 +38,7 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
         argOrdinaryApp(context);
         context.addParameter(step.language, "--language");
         context.addParameter(step.locale, "--locale");
+        context.addParameter(step.settings, "--settings");
 
         context.addCredentialsEnv(step.databaseCredentialsID, VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);
 
@@ -47,14 +49,13 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
 
     private void executeVRunner(VRunnerContext context) throws IOException, InterruptedException {
 
-        var logger = context.getLogger();
         var exitCode = context.createStarter().join();
 
         if (exitCode == 0) {
             return;
-        } else if (ignoredExitCodes.contains(exitCode)) {
-            logger.format(Messages.getString("VRunnerExecution.RunIgnoredExitCode"), exitCode);
-            return;
+        } else if (exitCodes.containsKey(exitCode)) {
+            final var result = exitCodes.get(exitCode);
+            context.setResult(result);
         } else {
             throw new AbortException(String.format(Messages.getString("VRunnerExecution.RunAborted"), exitCode));
         }

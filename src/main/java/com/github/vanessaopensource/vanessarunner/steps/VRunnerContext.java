@@ -9,6 +9,7 @@ import hudson.AbortException;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.Launcher;
+import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.util.ArgumentListBuilder;
@@ -94,6 +95,10 @@ public class VRunnerContext {
         var password = Secret.toString(credentials.getPassword());
         env.put(usernameEnv, username);
         env.put(passwordEnv, password);
+    }
+
+    public void setResult(Result result) {
+        run.setResult(result);
     }
 
     public Launcher.ProcStarter createStarter() {
