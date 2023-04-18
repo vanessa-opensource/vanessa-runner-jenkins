@@ -16,6 +16,7 @@ public class CompileCfeStepTest {
         var step = new CompileCfeStep();
         step.src = "src/cfe";
         step.out = "1cv8.cfe";
+        step.buildNumber = 9999;
         step.language = "en";
 
         var job = r.createWorkFlowJob(step);
@@ -30,5 +31,6 @@ public class CompileCfeStepTest {
         j.assertLogContains("Выгрузка в файл завершена.", run);
         j.assertLogContains("Configuration successfully saved", run);
         VRunnerRule.assertChildFileExists("1cv8.cfe", workSpace);
+        VRunnerRule.assertBuildNumber("src/cfe/Configuration.xml", 9999, workSpace);
     }
 }

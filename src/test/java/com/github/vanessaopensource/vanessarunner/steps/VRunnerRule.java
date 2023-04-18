@@ -7,6 +7,7 @@ import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.FilePath;
+import hudson.slaves.WorkspaceList;
 import jenkins.model.Jenkins;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
@@ -16,8 +17,10 @@ import org.jvnet.hudson.test.JenkinsRule;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 @Extension
 public class VRunnerRule {
@@ -59,6 +62,10 @@ public class VRunnerRule {
         assert workspace != null;
         workspace.mkdirs();
 
+        var tempDir = WorkspaceList.tempDir(workspace);
+        assert tempDir != null;
+        tempDir.mkdirs();
+
         return workspace;
     }
 
@@ -72,6 +79,13 @@ public class VRunnerRule {
 
     public static void assertChildFileExists(String child, FilePath filePath) throws IOException, InterruptedException {
         assert filePath.child(child).exists();
+    }
+
+    public static void assertBuildNumber(String configuration, Integer buildNumber, FilePath workSpace) throws IOException, InterruptedException {
+        var path = Path.of(workSpace.child(configuration).toURI());
+        var content = Files.readString(path);
+        var regex = String.format("<Version>\\d+.\\d+.\\d+.(%d)|\\d+.\\d+.(%d)<\\/Version>", buildNumber, buildNumber);
+        assert Pattern.compile(regex).matcher(content).find();
     }
 
     public static void provideCredentialsAdministratorEmpty() {
