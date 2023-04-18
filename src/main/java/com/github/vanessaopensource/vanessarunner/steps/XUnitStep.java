@@ -1,6 +1,5 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
@@ -10,8 +9,6 @@ import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class XUnitStep extends VRunner {
