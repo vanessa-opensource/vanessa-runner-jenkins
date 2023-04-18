@@ -44,6 +44,8 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
 
         executeVRunner(context);
 
+        context.cleanup();
+
         return 0;
     }
 

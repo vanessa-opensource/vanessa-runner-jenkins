@@ -12,6 +12,7 @@ import hudson.Launcher;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import hudson.slaves.WorkspaceList;
 import hudson.util.ArgumentListBuilder;
 import hudson.util.Secret;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
@@ -30,6 +31,7 @@ public class VRunnerContext {
     private final FilePath workSpace;
     private final TaskListener listener;
     private final Run<?, ?> run;
+    private final FilePath tmpDir;
 
     @NonNull
     public static Set<? extends Class<?>> getRequiredContext() {
@@ -44,6 +46,9 @@ public class VRunnerContext {
         workSpace = Objects.requireNonNull(stepContext.get(FilePath.class));
         listener = Objects.requireNonNull(stepContext.get(TaskListener.class));
         run = Objects.requireNonNull(stepContext.get(Run.class));
+
+        var workSpaceTmp = Objects.requireNonNull(WorkspaceList.tempDir(workSpace));
+        tmpDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 
     public PrintStream getLogger() {
@@ -101,6 +106,14 @@ public class VRunnerContext {
         run.setResult(result);
     }
 
+    public FilePath createTempFile(final String prefix, final String suffix) throws IOException, InterruptedException {
+        return tmpDir.createTempFile(prefix, suffix);
+    }
+
+    public void cleanup() throws IOException, InterruptedException {
+        tmpDir.deleteRecursive();
+    }
+
     public Launcher.ProcStarter createStarter() {
 
         var launcherArgs = launcherArgs();
@@ -120,6 +133,10 @@ public class VRunnerContext {
         if (launcher.isUnix()) {
             launcherArgs.add("vrunner");
         } else {
+
+            env.put("TEMP", tmpDir.getRemote());
+            env.put("TMP", tmpDir.getRemote());
+
             launcherArgs.add("cmd.exe");
             launcherArgs.add("/C");
             launcherArgs.add("chcp");
