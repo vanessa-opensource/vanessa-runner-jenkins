@@ -28,9 +28,6 @@ public class XUnitStep extends VRunner {
     @DataBoundSetter
     String reportJUnit;
 
-    @DataBoundSetter
-    String reportGenericExecution;
-
     @DataBoundConstructor
     public XUnitStep() {
         super();
@@ -75,11 +72,11 @@ public class XUnitStep extends VRunner {
             addArgReportsXUnit(context);
 
             try {
-                var exitcodeFile = Files.createTempFile("v8_", ".tmp");
-                context.addParameter(exitcodeFile.toFile().getAbsolutePath(), "--xddExitCodePath");
+                var exitCodeFile = context.createTempFile("xdd_", ".run");
+                context.addParameter(exitCodeFile.getRemote(), "--xddExitCodePath");
                 exitCodes.put(1, Result.UNSTABLE);
                 exitCodes.put(2, Result.NOT_BUILT);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 context.getLogger().println(ex.getLocalizedMessage());
             }
         }
@@ -91,9 +88,6 @@ public class XUnitStep extends VRunner {
             }
             if(!Strings.isNullOrEmpty(step.reportJUnit)) {
                 reportsXUnit.add(String.format("GenerateReportJUnitXML{%s}", step.reportJUnit));
-            }
-            if(!Strings.isNullOrEmpty(step.reportGenericExecution)) {
-                reportsXUnit.add(String.format("GenerateReportGenericExecution{%s}", step.reportGenericExecution));
             }
 
             if(!reportsXUnit.isEmpty()) {

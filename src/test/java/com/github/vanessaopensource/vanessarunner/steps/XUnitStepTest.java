@@ -41,7 +41,6 @@ public class XUnitStepTest {
         step.testsPath = "testExtensionFail";
         step.configTests = true;
         step.ibConnection = "/Fbuild/ib";
-        step.reportGenericExecution = "build/genericExecution/sonar.xml";
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -53,7 +52,6 @@ public class XUnitStepTest {
         // then
         j.assertBuildStatus(Result.UNSTABLE, run);
         j.assertLogContains("ОШИБКА - Часть тестов упала!", run);
-        VRunnerRule.assertChildFileExists("build/genericExecution", workSpace);
     }
 
     @Test
