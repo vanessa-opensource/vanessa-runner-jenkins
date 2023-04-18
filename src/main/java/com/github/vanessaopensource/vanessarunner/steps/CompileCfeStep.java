@@ -5,21 +5,8 @@ import hudson.Extension;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
 
-public class CompileCfeStep extends VRunner {
-
-    @DataBoundSetter
-    String src;
-
-    @DataBoundSetter
-    String out;
-
-    @DataBoundSetter
-    Boolean current;
-
-    @DataBoundSetter
-    Integer buildNumber;
+public class CompileCfeStep extends Compile {
 
     @DataBoundConstructor
     public CompileCfeStep() {
@@ -47,24 +34,16 @@ public class CompileCfeStep extends VRunner {
         }
     }
 
-    public static class StepExecutionImpl extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient CompileCfeStep step;
+    public static class StepExecutionImpl extends Compile.StepExecutionImpl {
 
         protected StepExecutionImpl(StepContext context, CompileCfeStep step) {
             super(context, step);
-            this.step = step;
         }
 
         @Override
         public void addCommandContext(VRunnerContext context) {
-
             context.setCommand("compileexttocfe");
-            context.addParameter(step.src, "--src");
-            context.addParameter(step.out, "--out");
-            context.addSwitch(step.current, "--current");
-            context.addParameter(step.buildNumber, "--build-number");
+            super.addCommandContext(context);
         }
     }
 }
