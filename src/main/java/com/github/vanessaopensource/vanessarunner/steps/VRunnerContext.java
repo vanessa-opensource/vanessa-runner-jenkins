@@ -102,6 +102,14 @@ public class VRunnerContext {
         env.put(passwordEnv, password);
     }
 
+    public void setEnvVar(String key, String value) {
+        env.put(key, value);
+    }
+
+    public Integer getBuildNumber() {
+        return run.number;
+    }
+
     public void setResult(Result result) {
         run.setResult(result);
     }
@@ -133,10 +141,6 @@ public class VRunnerContext {
         if (launcher.isUnix()) {
             launcherArgs.add("vrunner");
         } else {
-
-            env.put("TEMP", tmpDir.getRemote());
-            env.put("TMP", tmpDir.getRemote());
-
             launcherArgs.add("cmd.exe");
             launcherArgs.add("/C");
             launcherArgs.add("chcp");

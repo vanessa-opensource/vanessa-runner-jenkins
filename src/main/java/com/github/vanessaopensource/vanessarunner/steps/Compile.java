@@ -5,16 +5,19 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public abstract class Compile extends VRunner {
     @DataBoundSetter
-    String src;
+    String src = "";
 
     @DataBoundSetter
-    String out;
+    String out = "";
 
     @DataBoundSetter
-    Boolean current;
+    Boolean current = false;
 
     @DataBoundSetter
-    Integer buildNumber;
+    Integer buildNumber = 0;
+
+    @DataBoundSetter
+    Boolean withBuildNumber = false;
 
     public abstract static class StepExecutionImpl extends VRunnerExecution {
         private static final long serialVersionUID = 1L;
@@ -31,7 +34,13 @@ public abstract class Compile extends VRunner {
             context.addParameter(step.src, "--src");
             context.addParameter(step.out, "--out");
             context.addSwitch(step.current, "--current");
-            context.addParameter(step.buildNumber, "--build-number");
+
+            if(step.withBuildNumber) {
+                var envBuildNumber = context.getBuildNumber();
+                context.addParameter(envBuildNumber, "--build-number");
+            } else {
+                context.addParameter(step.buildNumber, "--build-number");
+            }
         }
     }
 }
