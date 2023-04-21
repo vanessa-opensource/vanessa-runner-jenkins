@@ -18,6 +18,7 @@ public class XUnitStepTest {
         step.configTests = true;
         step.ibConnection = "/Fbuild/ib";
         step.reportJUnit = "build/junit/xunit.xml";
+        step.language = "en";
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -41,6 +42,7 @@ public class XUnitStepTest {
         step.testsPath = "testExtensionFail";
         step.configTests = true;
         step.ibConnection = "/Fbuild/ib";
+        step.language = "en";
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -63,6 +65,7 @@ public class XUnitStepTest {
         step.testsPath = "$addroot/tests/smoke";
         step.ibConnection = "/Fbuild/ib";
         step.reportAllure = "build/allure/xunit.json";
+        step.language = "en";
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

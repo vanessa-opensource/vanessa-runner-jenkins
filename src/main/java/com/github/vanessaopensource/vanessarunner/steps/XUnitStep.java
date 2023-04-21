@@ -11,19 +11,10 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 import java.util.ArrayList;
 
-public class XUnitStep extends VRunner {
+public class XUnitStep extends RunTests {
 
     @DataBoundSetter
-    String testsPath;
-
-    @DataBoundSetter
-    Boolean configTests;
-
-    @DataBoundSetter
-    String reportAllure;
-
-    @DataBoundSetter
-    String reportJUnit;
+    Boolean configTests = false;
 
     @DataBoundConstructor
     public XUnitStep() {
