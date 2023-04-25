@@ -1,0 +1,66 @@
+String mainSrcDir = 'src/cf'
+String testSrcDir = 'src/tests'
+String testExtensionName = 'tests'
+String v8Version = '8.3.23'
+
+String ibConnection = '/Fbuild/ib'
+String cfFile = 'bin/1cv8_$version.cf'; 
+String reportJUnit = 'build/junit'
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                vrunnerMakeDist src: mainSrcDir,
+                    out: cfFile,
+                    withBuildNumber: true,
+                    v8Version: v8Version
+            }
+        }
+
+        stage('Store artifact') {
+            steps {
+                archiveArtifacts artifacts: 'bin/*.cf', fingerprint: true
+            }
+        }
+
+        stage('Create infobase') {
+            steps {
+                vrunnerInitDev cf: cfFile,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+
+        stage('Load tests') {
+            steps {
+                vrunnerInitCfe src: testSrcDir,
+                    extension: testExtensionName,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                vrunnerXUnit testsPath: testExtensionName,
+                    configTests: true,
+                    reportJUnit: reportJUnit,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+            post {
+                always {
+                    junit testResults: reportJUnit
+                }
+            }
+        }
+    }
+}
