@@ -31,7 +31,7 @@ public class VRunnerContext {
     private final FilePath workSpace;
     private final TaskListener listener;
     private final Run<?, ?> run;
-    private final FilePath tmpDir;
+    private final FilePath tempDir;
 
     @NonNull
     public static Set<? extends Class<?>> getRequiredContext() {
@@ -48,7 +48,7 @@ public class VRunnerContext {
         run = Objects.requireNonNull(stepContext.get(Run.class));
 
         var workSpaceTmp = Objects.requireNonNull(WorkspaceList.tempDir(workSpace));
-        tmpDir = workSpaceTmp.createTempDir("vrunner", "tmp");
+        tempDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 
     public PrintStream getLogger() {
@@ -74,7 +74,7 @@ public class VRunnerContext {
     }
 
     public void addParameter(@CheckForNull Integer value, String key) {
-        if (value == null) {
+        if (value == null || value == 0) {
             return;
         }
         args.add(key).add(value.toString());
@@ -115,11 +115,11 @@ public class VRunnerContext {
     }
 
     public FilePath createTempFile(final String prefix, final String suffix) throws IOException, InterruptedException {
-        return tmpDir.createTempFile(prefix, suffix);
+        return tempDir.createTempFile(prefix, suffix);
     }
 
     public void cleanup() throws IOException, InterruptedException {
-        tmpDir.deleteRecursive();
+        tempDir.deleteRecursive();
     }
 
     public Launcher.ProcStarter createStarter() {
