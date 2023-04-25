@@ -35,6 +35,10 @@ public abstract class Compile extends VRunner {
             context.addParameter(step.out, "--out");
             context.addSwitch(step.current, "--current");
 
+            addBuildNumber(context);
+        }
+
+        void addBuildNumber(VRunnerContext context) {
             if(step.withBuildNumber) {
                 var envBuildNumber = context.getBuildNumber();
                 context.addParameter(envBuildNumber, "--build-number");
