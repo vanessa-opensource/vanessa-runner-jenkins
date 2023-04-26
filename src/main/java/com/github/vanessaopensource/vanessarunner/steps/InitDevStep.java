@@ -14,6 +14,9 @@ public class InitDevStep extends VRunner {
     String src;
 
     @DataBoundSetter
+    String cf = "";
+
+    @DataBoundSetter
     String dt;
 
     @DataBoundSetter
@@ -78,6 +81,7 @@ public class InitDevStep extends VRunner {
 
             context.setCommand("init-dev");
             context.addParameter(step.src, "--src");
+            context.addParameter(step.cf, "--cf");
             context.addParameter(step.dt, "--dt");
             context.addSwitch(step.dev, "--dev");
             context.addSwitch(step.storage, "--storage");
