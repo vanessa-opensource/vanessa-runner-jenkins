@@ -47,7 +47,8 @@ public class VRunnerContext {
         listener = Objects.requireNonNull(stepContext.get(TaskListener.class));
         run = Objects.requireNonNull(stepContext.get(Run.class));
 
-        var workSpaceTmp = Objects.requireNonNull(WorkspaceList.tempDir(workSpace));
+        var workSpaceTmp = WorkspaceList.tempDir(workSpace);
+        assert workSpaceTmp != null;
         tempDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 

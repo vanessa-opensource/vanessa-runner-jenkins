@@ -71,10 +71,10 @@ public class XUnitStep extends RunTests {
 
         private void addArgReportsXUnit(VRunnerContext context) {
             var reportsXUnit = new ArrayList<String>();
-            if(!Strings.isNullOrEmpty(step.reportAllure)) {
+            if(!step.reportAllure.isBlank()) {
                 reportsXUnit.add(String.format("GenerateReportAllureXMLВерсия2{%s}", step.reportAllure));
             }
-            if(!Strings.isNullOrEmpty(step.reportJUnit)) {
+            if(!step.reportAllure.isBlank()) {
                 reportsXUnit.add(String.format("GenerateReportJUnitXML{%s}", step.reportJUnit));
             }
 
