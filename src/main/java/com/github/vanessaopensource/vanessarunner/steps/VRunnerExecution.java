@@ -35,7 +35,7 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
         context.addParameter(step.v8Version, "--v8version");
         context.addSwitch(step.noCacheUse, "--nocacheuse");
         context.addParameter(step.additional, "--additional");
-        argOrdinaryApp(context);
+        context.addSwitch(step.ordinaryApp, "--ordinaryapp", "1");
         context.addParameter(step.language, "--language");
         context.addParameter(step.locale, "--locale");
         context.addParameter(step.settings, "--settings");
@@ -61,20 +61,5 @@ abstract public class VRunnerExecution extends SynchronousNonBlockingStepExecuti
         } else {
             throw new AbortException(String.format(Messages.getString("VRunnerExecution.RunAborted"), exitCode));
         }
-    }
-
-    private void argOrdinaryApp(VRunnerContext context) {
-        var ordinaryApp = step.ordinaryApp;
-        if (ordinaryApp == null) {
-            return;
-        }
-
-        String value;
-        if(ordinaryApp) {
-            value = "1";
-        } else {
-            value = "-1";
-        }
-        context.addParameter(value, "--ordinaryapp");
     }
 }

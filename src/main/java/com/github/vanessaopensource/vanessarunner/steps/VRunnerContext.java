@@ -67,6 +67,12 @@ public class VRunnerContext {
         args.add(key);
     }
 
+    public void addSwitch(Boolean switchId, String key, String value) {
+        if (switchId) {
+            args.add(key).add(value);
+        }
+    }
+
     public void addParameter(@CheckForNull String value, String key) {
         if (Strings.isNullOrEmpty(value)) {
             return;

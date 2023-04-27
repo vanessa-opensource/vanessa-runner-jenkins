@@ -86,19 +86,11 @@ public class InitDevStep extends VRunner {
             context.addSwitch(step.dev, "--dev");
             context.addSwitch(step.storage, "--storage");
             context.addParameter(step.storageName, "--storage-name");
-            argStorageVer(context);
+            context.addParameter(step.storageVer, "--storage-ver");
             context.addSwitch(step.v1, "--v1");
             context.addSwitch(step.v2, "--v2");
 
             context.addCredentialsEnv(step.storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
-        }
-
-        private void argStorageVer(VRunnerContext context) {
-            var storageVer = step.storageVer;
-            if (storageVer == null || storageVer == 0) {
-                return;
-            }
-            context.addParameter(storageVer, "--storage-ver");
         }
     }
 }
