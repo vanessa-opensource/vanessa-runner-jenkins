@@ -74,7 +74,7 @@ public class XUnitStep extends RunTests {
             if(!step.reportAllure.isBlank()) {
                 reportsXUnit.add(String.format("GenerateReportAllureXMLВерсия2{%s}", step.reportAllure));
             }
-            if(!step.reportAllure.isBlank()) {
+            if(!step.reportJUnit.isBlank()) {
                 reportsXUnit.add(String.format("GenerateReportJUnitXML{%s}", step.reportJUnit));
             }
 
