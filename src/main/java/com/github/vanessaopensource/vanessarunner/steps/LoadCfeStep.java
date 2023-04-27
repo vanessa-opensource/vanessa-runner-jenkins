@@ -12,6 +12,12 @@ public class LoadCfeStep extends Load {
     @DataBoundSetter
     String extension = "";
 
+    @DataBoundSetter
+    String src = "";
+
+    @DataBoundSetter
+    Boolean updateDb = true;
+
     @DataBoundConstructor
     public LoadCfeStep() {
         super();
@@ -50,10 +56,16 @@ public class LoadCfeStep extends Load {
 
         @Override
         public void addCommandContext(VRunnerContext context) {
-
-            context.setCommand("loadext");
-            context.addParameter(step.file, "--file");
-            context.addParameter(step.extension, "--extension");
+            if(!step.src.isBlank()) {
+                context.setCommand("compileext");
+                context.setCommand(step.src);
+                context.setCommand(step.extension);
+            } else {
+                context.setCommand("loadext");
+                context.addParameter(step.file, "--file");
+                context.addParameter(step.extension, "--extension");
+            }
+            context.addSwitch(step.updateDb, "--updatedb");
         }
     }
 }

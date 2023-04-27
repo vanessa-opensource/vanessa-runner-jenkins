@@ -10,7 +10,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 public class LoadCfeStepTest {
 
     @Test
-    public void loadCf(JenkinsRule j) throws Exception {
+    public void loadCfe(JenkinsRule j) throws Exception {
         val r = VRunnerRule.createRule(j);
 
         // given
@@ -30,5 +30,28 @@ public class LoadCfeStepTest {
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("ИНФОРМАЦИЯ - Загрузка расширения из cfe-файла успешно завершена!", run);
+    }
+
+    @Test
+    public void loadSrc(JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
+
+        // given
+        val step = new LoadCfeStep();
+        step.src = "src/cfe";
+        step.extension = "Extension1";
+        step.ibConnection = "/Fbuild/ib";
+        step.language = "en";
+
+        val job = r.createWorkFlowJob(step);
+        val workSpace = r.createWorkSpace(job);
+        VRunnerRule.createLocalData(LoadCfStepTest.class, workSpace);
+
+        // when
+        val run = VRunnerRule.runJob(job);
+
+        // then
+        j.assertBuildStatus(Result.SUCCESS, run);
+        j.assertLogContains("Сборка/загрузка расширения Extension1 завершена", run);
     }
 }

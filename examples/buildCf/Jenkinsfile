@@ -41,7 +41,7 @@ pipeline {
 
         stage('Load tests') {
             steps {
-                vrunnerInitCfe src: testSrcDir,
+                vrunnerLoadCfe src: testSrcDir,
                     extension: testExtensionName,
                     ibConnection: ibConnection,
                     v8Version: v8Version
