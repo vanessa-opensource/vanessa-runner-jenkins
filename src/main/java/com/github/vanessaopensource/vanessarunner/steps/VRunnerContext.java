@@ -2,7 +2,6 @@ package com.github.vanessaopensource.vanessarunner.steps;
 
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
@@ -17,9 +16,7 @@ import hudson.util.ArgumentListBuilder;
 import hudson.util.Secret;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 
-import javax.annotation.CheckForNull;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -59,19 +56,14 @@ public class VRunnerContext {
         tempDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 
-    public PrintStream getLogger() {
-        return listener.getLogger();
-    }
-
     public void setCommand(String command) {
         args.add(command);
     }
 
-    public void addSwitch(@CheckForNull Boolean switchId, String key) {
-        if (switchId == null || !switchId) {
-            return;
+    public void addSwitch(Boolean switchId, String key) {
+        if (switchId) {
+            args.add(key);
         }
-        args.add(key);
     }
 
     public void addSwitch(Boolean switchId, String key, String value) {
@@ -80,22 +72,21 @@ public class VRunnerContext {
         }
     }
 
-    public void addParameter(@CheckForNull String value, String key) {
-        if (Strings.isNullOrEmpty(value)) {
-            return;
+    public void addParameter(String value, String key) {
+        if (!value.isBlank()) {
+            args.add(key).add(value);
         }
-        args.add(key).add(value);
+
     }
 
-    public void addParameter(@CheckForNull Integer value, String key) {
-        if (value == null || value == 0) {
-            return;
+    public void addParameter(Integer value, String key) {
+        if (value != 0) {
+            args.add(key).add(value.toString());
         }
-        args.add(key).add(value.toString());
     }
 
-    public void addCredentialsEnv(@CheckForNull String id, String usernameEnv, String passwordEnv) throws AbortException {
-        if (Strings.isNullOrEmpty(id)) {
+    public void addCredentialsEnv(String id, String usernameEnv, String passwordEnv) throws AbortException {
+        if (id.isBlank()) {
             return;
         }
 

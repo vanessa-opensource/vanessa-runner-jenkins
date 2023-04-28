@@ -3,25 +3,31 @@ package com.github.vanessaopensource.vanessarunner.steps;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
+import lombok.Getter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 public class RunStep extends VRunner {
 
+    @Getter
     @DataBoundSetter
-    String command;
+    String command = "";
 
+    @Getter
     @DataBoundSetter
-    String execute;
+    String execute = "";
 
+    @Getter
     @DataBoundSetter
-    Boolean noWait;
+    Boolean noWait = false;
 
+    @Getter
     @DataBoundSetter
-    String onlineFile;
+    String onlineFile = "";
 
+    @Getter
     @DataBoundSetter
-    String exitCodePath;
+    String exitCodePath = "";
 
     @DataBoundConstructor
     public RunStep() {
