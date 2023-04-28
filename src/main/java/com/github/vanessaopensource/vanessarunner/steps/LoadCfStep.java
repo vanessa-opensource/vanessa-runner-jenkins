@@ -1,9 +1,8 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.AbortException;
 import hudson.Extension;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class LoadCfStep extends Load {
@@ -14,8 +13,11 @@ public class LoadCfStep extends Load {
     }
 
     @Override
-    public StepExecution start(StepContext context)  {
-        return new LoadCfStep.StepExecutionImpl(context, this);
+    public void setCommandContext(VRunnerContext context) throws AbortException {
+        context.setCommand("load");
+        context.addParameter(file, "--src");
+
+        super.setCommandContext(context);
     }
 
     @Extension
@@ -33,23 +35,4 @@ public class LoadCfStep extends Load {
             return Messages.getString("LoadCfStep.DisplayName");
         }
     }
-
-    public static class StepExecutionImpl extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient LoadCfStep step;
-
-        protected StepExecutionImpl(StepContext context, LoadCfStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-
-            context.setCommand("load");
-            context.addParameter(step.file, "--src");
-        }
-    }
-
 }

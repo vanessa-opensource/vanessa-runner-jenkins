@@ -1,9 +1,8 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.AbortException;
 import hudson.Extension;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class CompileCfeStep extends Compile {
@@ -14,8 +13,12 @@ public class CompileCfeStep extends Compile {
     }
 
     @Override
-    public StepExecution start(StepContext context) {
-        return new StepExecutionImpl(context, this);
+    public void setCommandContext(VRunnerContext context) throws AbortException {
+        context.setCommand("compileexttocfe");
+        context.addParameter(src, "--src");
+        context.addParameter(out, "--out");
+
+        super.setCommandContext(context);
     }
 
     @Extension
@@ -31,19 +34,6 @@ public class CompileCfeStep extends Compile {
         @Override
         public String getDisplayName() {
             return Messages.getString("CompileCfeStep.DisplayName");
-        }
-    }
-
-    public static class StepExecutionImpl extends Compile.StepExecutionImpl {
-
-        protected StepExecutionImpl(StepContext context, CompileCfeStep step) {
-            super(context, step);
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-            context.setCommand("compileexttocfe");
-            super.addCommandContext(context);
         }
     }
 }

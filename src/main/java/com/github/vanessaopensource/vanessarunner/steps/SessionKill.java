@@ -19,13 +19,13 @@ public class SessionKill extends Session {
     }
 
     @Override
-    public void addCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("session");
         context.setCommand("kill");
 
         context.addSwitch(killWithNoLock, "--with-nolock");
 
-        super.addCommandContext(context);
+        super.setCommandContext(context);
     }
 
     @Extension

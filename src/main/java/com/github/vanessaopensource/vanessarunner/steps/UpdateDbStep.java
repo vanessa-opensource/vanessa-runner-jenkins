@@ -1,10 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.AbortException;
 import hudson.Extension;
 import lombok.Getter;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
@@ -24,21 +23,34 @@ public class UpdateDbStep extends VRunner {
 
     @Getter
     @DataBoundSetter
-
     Boolean dynamic = false;
+
     @DataBoundConstructor
-    
     public UpdateDbStep() {
         super();
     }
 
     @Override
-    public StepExecution start(StepContext context) throws Exception {
+    public void setCommandContext(VRunnerContext context) throws AbortException {
         if(extension.isBlank()) {
-            return new UpdateDbCfExecution(context, this);
+            setUpdateDbCfContext(context);
         } else {
-            return new UpdateDbCfeExecution(context, this);
+            setUpdateDbCfeContext(context);
         }
+
+        super.setCommandContext(context);
+    }
+
+    private void setUpdateDbCfContext(VRunnerContext context) {
+        context.setCommand("updatedb");
+        context.addSwitch(v1, "--v1");
+        context.addSwitch(v2, "--v2");
+        context.addSwitch(dynamic, "--dynamic");
+    }
+
+    private void setUpdateDbCfeContext(VRunnerContext context) {
+        context.setCommand("updateext");
+        context.setCommand(extension);
     }
 
     @Extension
@@ -54,42 +66,6 @@ public class UpdateDbStep extends VRunner {
         @Override
         public String getDisplayName() {
             return Messages.getString("UpdateDbStep.DisplayName");
-        }
-    }
-
-    public static class UpdateDbCfExecution extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient UpdateDbStep step;
-
-        protected UpdateDbCfExecution(StepContext context, UpdateDbStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-            context.setCommand("updatedb");
-            context.addSwitch(step.v1, "--v1");
-            context.addSwitch(step.v2, "--v2");
-            context.addSwitch(step.dynamic, "--dynamic");
-        }
-    }
-
-    public static class UpdateDbCfeExecution extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient UpdateDbStep step;
-
-        protected UpdateDbCfeExecution(StepContext context, UpdateDbStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-             context.setCommand("updateext");
-             context.setCommand(step.extension);
         }
     }
 }

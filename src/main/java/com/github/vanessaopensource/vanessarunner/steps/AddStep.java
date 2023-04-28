@@ -1,10 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.AbortException;
 import hudson.Extension;
 import hudson.model.Result;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class AddStep extends RunTests {
@@ -15,8 +14,25 @@ public class AddStep extends RunTests {
     }
 
     @Override
-    public StepExecution start(StepContext context)  {
-        return new AddStep.StepExecutionImpl(context, this);
+    public void setCommandContext(VRunnerContext context) throws AbortException {
+
+        context.putExitCodeResult(1, Result.UNSTABLE);
+        context.putExitCodeResult(2, Result.UNSTABLE);
+
+        context.setCommand("vanessa");
+        context.addParameter(testsPath, "--path");
+
+        if(!reportAllure.isBlank()) {
+            context.setEnvVar("VANESSA_allurecreatereport", "true");
+            context.setEnvVar("VANESSA_allurepath", reportAllure);
+        }
+
+        if(!reportJUnit.isBlank()) {
+            context.setEnvVar("VANESSA_junitcreatereport", "true");
+            context.setEnvVar("VANESSA_junitpath", reportJUnit);
+        }
+
+        super.setCommandContext(context);
     }
 
     @Extension
@@ -32,37 +48,6 @@ public class AddStep extends RunTests {
         @Override
         public String getDisplayName() {
             return Messages.getString("AddStep.DisplayName");
-        }
-    }
-
-    public static class StepExecutionImpl extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient AddStep step;
-
-        protected StepExecutionImpl(StepContext context, AddStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-
-            exitCodes.put(1, Result.UNSTABLE);
-            exitCodes.put(2, Result.UNSTABLE);
-
-            context.setCommand("vanessa");
-            context.addParameter(step.testsPath, "--path");
-
-            if(!step.reportAllure.isBlank()) {
-                context.setEnvVar("VANESSA_allurecreatereport", "true");
-                context.setEnvVar("VANESSA_allurepath", step.reportAllure);
-            }
-
-            if(!step.reportJUnit.isBlank()) {
-                context.setEnvVar("VANESSA_junitcreatereport", "true");
-                context.setEnvVar("VANESSA_junitpath", step.reportJUnit);
-            }
         }
     }
 }

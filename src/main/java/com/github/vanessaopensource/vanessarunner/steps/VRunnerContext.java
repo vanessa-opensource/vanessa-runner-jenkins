@@ -20,12 +20,17 @@ import org.jenkinsci.plugins.workflow.steps.StepContext;
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 public class VRunnerContext {
 
     private final ArgumentListBuilder args = new ArgumentListBuilder();
+
+    private final Map<Integer, Result> exitCodes = new HashMap<>();
+
     private final Launcher launcher;
     private final EnvVars env;
     private final FilePath workSpace;
@@ -119,8 +124,17 @@ public class VRunnerContext {
         return run.number;
     }
 
-    public void setResult(Result result) {
-        run.setResult(result);
+    public void putExitCodeResult(Integer exitCode, Result result) {
+        exitCodes.put(exitCode, result);
+    }
+
+    public void verifyExitCode(Integer exitCode) throws AbortException {
+        if (exitCodes.containsKey(exitCode)) {
+            var result = exitCodes.get(exitCode);
+            run.setResult(result);
+        } else {
+            throw new AbortException(String.format(Messages.getString("VRunnerExecution.RunAborted"), exitCode));
+        }
     }
 
     public FilePath createTempFile(final String prefix, final String suffix) throws IOException, InterruptedException {

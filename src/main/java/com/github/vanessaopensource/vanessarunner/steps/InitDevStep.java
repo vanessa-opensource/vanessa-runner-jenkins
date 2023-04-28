@@ -3,42 +3,51 @@ package com.github.vanessaopensource.vanessarunner.steps;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
+import lombok.Getter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 public class InitDevStep extends VRunner {
 
+    @Getter
     @DataBoundSetter
-    String src;
+    String src = "";
 
+    @Getter
     @DataBoundSetter
     String cf = "";
 
+    @Getter
     @DataBoundSetter
-    String dt;
+    String dt = "";
 
+    @Getter
     @DataBoundSetter
-    Boolean dev;
+    Boolean dev = false;
 
+    @Getter
     @DataBoundSetter
-    Boolean storage;
+    Boolean storage = false;
 
+    @Getter
     @DataBoundSetter
-    String storageName;
+    String storageName = "";
 
+    @Getter
     @DataBoundSetter
-    String storageCredentialsID;
+    String storageCredentialsID = "";
 
+    @Getter
     @DataBoundSetter
-    Integer storageVer;
+    Integer storageVer = 0;
 
+    @Getter
     @DataBoundSetter
-    Boolean v1;
+    Boolean v1 = false;
 
+    @Getter
     @DataBoundSetter
-    Boolean v2;
+    Boolean v2 = false;
 
     @DataBoundConstructor
     public InitDevStep() {
@@ -46,8 +55,21 @@ public class InitDevStep extends VRunner {
     }
 
     @Override
-    public StepExecution start(StepContext context) {
-        return new StepExecutionImpl(context, this);
+    public void setCommandContext(VRunnerContext context) throws AbortException {
+        context.setCommand("init-dev");
+        context.addParameter(src, "--src");
+        context.addParameter(cf, "--cf");
+        context.addParameter(dt, "--dt");
+        context.addSwitch(dev, "--dev");
+        context.addSwitch(storage, "--storage");
+        context.addParameter(storageName, "--storage-name");
+        context.addParameter(storageVer, "--storage-ver");
+        context.addSwitch(v1, "--v1");
+        context.addSwitch(v2, "--v2");
+
+        context.addCredentialsEnv(storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
+
+        super.setCommandContext(context);
     }
 
     @Extension
@@ -63,34 +85,6 @@ public class InitDevStep extends VRunner {
         @Override
         public String getDisplayName() {
             return Messages.getString("InitDevStep.DisplayName");
-        }
-    }
-
-    public static class StepExecutionImpl extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient InitDevStep step;
-
-        protected StepExecutionImpl(StepContext context, InitDevStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) throws AbortException {
-
-            context.setCommand("init-dev");
-            context.addParameter(step.src, "--src");
-            context.addParameter(step.cf, "--cf");
-            context.addParameter(step.dt, "--dt");
-            context.addSwitch(step.dev, "--dev");
-            context.addSwitch(step.storage, "--storage");
-            context.addParameter(step.storageName, "--storage-name");
-            context.addParameter(step.storageVer, "--storage-ver");
-            context.addSwitch(step.v1, "--v1");
-            context.addSwitch(step.v2, "--v2");
-
-            context.addCredentialsEnv(step.storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
         }
     }
 }

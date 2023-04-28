@@ -1,18 +1,19 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.AbortException;
 import hudson.Extension;
 import lombok.Getter;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 public class LoadCfeStep extends Load {
 
+    @Getter
     @DataBoundSetter
     String extension = "";
 
+    @Getter
     @DataBoundSetter
     String src = "";
 
@@ -26,12 +27,28 @@ public class LoadCfeStep extends Load {
     }
 
     @Override
-    public StepExecution start(StepContext context)  {
+    public void setCommandContext(VRunnerContext context) throws AbortException {
         if(src.isBlank()) {
-            return new LoadCfeFileExecution(context, this);
+            setLoadCfeFileContext(context);
         } else {
-            return new LoadCfeSrcExecution(context, this);
+            setLoadCfeSrcContext(context);
         }
+
+        super.setCommandContext(context);
+    }
+
+    private void setLoadCfeFileContext(VRunnerContext context) {
+        context.setCommand("loadext");
+        context.addParameter(file, "--file");
+        context.addParameter(extension, "--extension");
+        context.addSwitch(updateDb, "--updatedb");
+    }
+
+    private void setLoadCfeSrcContext(VRunnerContext context) {
+        context.setCommand("compileext");
+        context.setCommand(src);
+        context.setCommand(extension);
+        context.addSwitch(updateDb, "--updatedb");
     }
 
     @Extension
@@ -47,44 +64,6 @@ public class LoadCfeStep extends Load {
         @Override
         public String getDisplayName() {
             return Messages.getString("LoadCfeStep.DisplayName");
-        }
-    }
-
-    public static class LoadCfeFileExecution extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient LoadCfeStep step;
-
-        protected LoadCfeFileExecution(StepContext context, LoadCfeStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-            context.setCommand("loadext");
-            context.addParameter(step.file, "--file");
-            context.addParameter(step.extension, "--extension");
-            context.addSwitch(step.updateDb, "--updatedb");
-        }
-    }
-
-    public static class LoadCfeSrcExecution extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
-
-        private final transient LoadCfeStep step;
-
-        protected LoadCfeSrcExecution(StepContext context, LoadCfeStep step) {
-            super(context, step);
-            this.step = step;
-        }
-
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-            context.setCommand("compileext");
-            context.setCommand(step.src);
-            context.setCommand(step.extension);
-            context.addSwitch(step.updateDb, "--updatedb");
         }
     }
 }

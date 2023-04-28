@@ -1,6 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import org.jenkinsci.plugins.workflow.steps.StepContext;
+import hudson.AbortException;
 import org.kohsuke.stapler.DataBoundSetter;
 
 public abstract class Compile extends VRunner {
@@ -19,32 +19,21 @@ public abstract class Compile extends VRunner {
     @DataBoundSetter
     Boolean withBuildNumber = false;
 
-    public abstract static class StepExecutionImpl extends VRunnerExecution {
-        private static final long serialVersionUID = 1L;
+    @Override
+    public void setCommandContext(VRunnerContext context) throws AbortException {
 
-        private final transient Compile step;
+        context.addSwitch(current, "--current");
+        addBuildNumber(context);
 
-        public StepExecutionImpl(StepContext context, Compile step) {
-            super(context, step);
-            this.step = step;
-        }
+        super.setCommandContext(context);
+    }
 
-        @Override
-        public void addCommandContext(VRunnerContext context) {
-            context.addParameter(step.src, "--src");
-            context.addParameter(step.out, "--out");
-            context.addSwitch(step.current, "--current");
-
-            addBuildNumber(context);
-        }
-
-        void addBuildNumber(VRunnerContext context) {
-            if(step.withBuildNumber) {
-                var envBuildNumber = context.getBuildNumber();
-                context.addParameter(envBuildNumber, "--build-number");
-            } else {
-                context.addParameter(step.buildNumber, "--build-number");
-            }
+    private void addBuildNumber(VRunnerContext context) {
+        if(withBuildNumber) {
+            var envBuildNumber = context.getBuildNumber();
+            context.addParameter(envBuildNumber, "--build-number");
+        } else {
+            context.addParameter(buildNumber, "--build-number");
         }
     }
 }

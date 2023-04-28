@@ -1,11 +1,12 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import hudson.util.FormValidation;
+import hudson.AbortException;
 import lombok.Getter;
 import org.jenkinsci.plugins.workflow.steps.Step;
+import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
+import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.QueryParameter;
 
 import java.util.Set;
 
@@ -58,7 +59,24 @@ abstract public class VRunner extends Step {
     @DataBoundSetter
     String settings = "";
 
-    public VRunner() {
+    public void setCommandContext(VRunnerContext context) throws AbortException {
+
+        context.addParameter(ibConnection, "--ibconnection");
+        context.addParameter(ucCode, "--uccode");
+        context.addParameter(v8Version, "--v8version");
+        context.addSwitch(noCacheUse, "--nocacheuse");
+        context.addParameter(additional, "--additional");
+        context.addSwitch(ordinaryApp, "--ordinaryapp", "1");
+        context.addParameter(language, "--language");
+        context.addParameter(locale, "--locale");
+        context.addParameter(settings, "--settings");
+
+        context.addCredentialsEnv(databaseCredentialsID, VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);
+    }
+
+    @Override
+    public StepExecution start(StepContext context)  {
+        return new VRunnerExecution(context, this);
     }
 
     public abstract static class Descriptor extends StepDescriptor {

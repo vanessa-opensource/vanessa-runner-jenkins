@@ -27,14 +27,14 @@ public class SessionLock extends Session {
     }
 
     @Override
-    public void addCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("session");
         context.setCommand("lock");
         context.addParameter(lockMessage, "--lockmessage");
         context.addParameter(lockStartAt, "--lockstartat");
         context.addSwitch(lockEndClear, "--lockendclear");
 
-        super.addCommandContext(context);
+        super.setCommandContext(context);
     }
 
     @Extension
