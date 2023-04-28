@@ -1,0 +1,41 @@
+String clusterHost = 'localhost';
+String dbName = 'DefAlias'
+String cfProjectName = 'buildCf'
+String databaseCredentialsID = '';
+
+String cfFile = 'bin/1cv8_$version.cf';
+String ibConnection = "/S${clusterHost}\\${dbName}";
+
+String v8Version = '8.3.23'
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+        stage('Load cf') {
+            steps {
+                copyArtifacts projectName: cfProjectName,
+                    target: 'bin',
+                    flatten: true
+
+                vrunnerUpdateDist file: cfFile,
+                    databaseCredentialsID: databaseCredentialsID,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+
+        stage('Update infobase') {
+            steps {
+                vrunnerUpdateDb databaseCredentialsID: databaseCredentialsID,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+    }
+}

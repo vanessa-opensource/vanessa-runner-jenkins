@@ -1,0 +1,44 @@
+String clusterHost = 'localhost';
+String dbName = 'DefAlias'
+String extensionName = 'MyCfe'
+String cfeProjectName = 'buildCfe'
+String databaseCredentialsID = '';
+
+String cfeFile = 'bin/1cv8_$version.cfe';
+String ibConnection = "/S${clusterHost}\\${dbName}";
+
+String v8Version = '8.3.23'
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+        stage('Load cfe') {
+            steps {
+                copyArtifacts projectName: cfeProjectName,
+                    target: 'bin',
+                    flatten: true
+
+                vrunnerLoadCfe file: cfeFile,
+                    extension: extensionName,
+                    databaseCredentialsID: databaseCredentialsID,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+
+        stage('Update infobase') {
+            steps {
+                vrunnerUpdateDb extension: extensionName,
+                    databaseCredentialsID: databaseCredentialsID,
+                    ibConnection: ibConnection,
+                    v8Version: v8Version
+            }
+        }
+    }
+}
