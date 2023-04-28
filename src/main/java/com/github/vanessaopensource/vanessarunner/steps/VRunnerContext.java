@@ -49,6 +49,8 @@ public class VRunnerContext {
 
         var workSpaceTmp = WorkspaceList.tempDir(workSpace);
         assert workSpaceTmp != null;
+        workSpace.mkdirs();
+        workSpaceTmp.mkdirs();
         tempDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 
