@@ -3,27 +3,19 @@ package com.github.vanessaopensource.vanessarunner.steps;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
-import lombok.Getter;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
 
-public class SessionKill extends Session {
-
-    @Getter
-    @DataBoundSetter
-    Boolean killWithNoLock = false;
+public class SessionUnlockStep extends Session {
 
     @DataBoundConstructor
-    public SessionKill() {
+    public SessionUnlockStep() {
         super();
     }
 
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("session");
-        context.setCommand("kill");
-
-        context.addSwitch(killWithNoLock, "--with-nolock");
+        context.setCommand("unlock");
 
         super.setCommandContext(context);
     }
@@ -34,13 +26,13 @@ public class SessionKill extends Session {
 
         @Override
         public String getFunctionName() {
-            return "vrunnerSessionKill";
+            return "vrunnerSessionUnlock";
         }
 
         @NonNull
         @Override
         public String getDisplayName() {
-            return Messages.getString("SessionKillStep.DisplayName");
+            return Messages.getString("SessionUnlockStep.DisplayName");
         }
     }
 }

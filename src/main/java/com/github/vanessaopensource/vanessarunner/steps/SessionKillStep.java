@@ -7,32 +7,23 @@ import lombok.Getter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
-public class SessionLock extends Session {
+public class SessionKillStep extends Session {
 
     @Getter
     @DataBoundSetter
-    String lockMessage = "";
-
-    @Getter
-    @DataBoundSetter
-    Integer lockStartAt = 0;
-
-    @Getter
-    @DataBoundSetter
-    Boolean lockEndClear = false;
+    Boolean killWithNoLock = false;
 
     @DataBoundConstructor
-    public SessionLock() {
+    public SessionKillStep() {
         super();
     }
 
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("session");
-        context.setCommand("lock");
-        context.addParameter(lockMessage, "--lockmessage");
-        context.addParameter(lockStartAt, "--lockstartat");
-        context.addSwitch(lockEndClear, "--lockendclear");
+        context.setCommand("kill");
+
+        context.addSwitch(killWithNoLock, "--with-nolock");
 
         super.setCommandContext(context);
     }
@@ -43,13 +34,13 @@ public class SessionLock extends Session {
 
         @Override
         public String getFunctionName() {
-            return "vrunnerSessionLock";
+            return "vrunnerSessionKill";
         }
 
         @NonNull
         @Override
         public String getDisplayName() {
-            return Messages.getString("SessionLockStep.DisplayName");
+            return Messages.getString("SessionKillStep.DisplayName");
         }
     }
 }
