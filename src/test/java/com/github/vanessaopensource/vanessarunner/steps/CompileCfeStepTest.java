@@ -14,10 +14,10 @@ public class CompileCfeStepTest {
 
         // given
         var step = new CompileCfeStep();
-        step.src = "src/cfe";
-        step.out = "1cv8_$version.cfe";
-        step.buildNumber = 9999;
-        step.language = "en";
+        step.setSrc("src/cfe");
+        step.setOut("1cv8_$version.cfe");
+        step.setBuildNumber(9999);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -39,10 +39,10 @@ public class CompileCfeStepTest {
 
         // given
         var step = new CompileCfeStep();
-        step.src = "src/cfe";
-        step.out = "1cv8_$version.cfe";
-        step.withBuildNumber = true;
-        step.language = "en";
+        step.setSrc("src/cfe");
+        step.setOut("1cv8_$version.cfe");
+        step.setWithBuildNumber(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

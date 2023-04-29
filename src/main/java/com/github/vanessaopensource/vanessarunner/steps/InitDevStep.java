@@ -1,51 +1,47 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public class InitDevStep extends VRunner {
 
-    @Getter
     @DataBoundSetter
     String src = "";
 
-    @Getter
     @DataBoundSetter
     String cf = "";
 
-    @Getter
     @DataBoundSetter
     String dt = "";
 
-    @Getter
     @DataBoundSetter
     Boolean dev = false;
 
-    @Getter
     @DataBoundSetter
     Boolean storage = false;
 
-    @Getter
     @DataBoundSetter
     String storageName = "";
 
-    @Getter
     @DataBoundSetter
     String storageCredentialsID = "";
 
-    @Getter
     @DataBoundSetter
     Integer storageVer = 0;
 
-    @Getter
     @DataBoundSetter
     Boolean v1 = false;
 
-    @Getter
     @DataBoundSetter
     Boolean v2 = false;
 

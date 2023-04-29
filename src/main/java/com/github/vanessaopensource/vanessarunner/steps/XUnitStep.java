@@ -1,14 +1,23 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.RunTests;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import hudson.model.Result;
+import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Getter
+@Setter
 public class XUnitStep extends RunTests {
 
     @DataBoundSetter
@@ -26,7 +35,7 @@ public class XUnitStep extends RunTests {
         context.putExitCodeResult(2, Result.NOT_BUILT);
 
         context.setCommand("xunit");
-        context.setCommand(testsPath);
+        context.setCommand(getTestsPath());
         context.addSwitch(configTests, "--config-tests");
 
         addArgReportsXUnit(context);
@@ -37,16 +46,20 @@ public class XUnitStep extends RunTests {
 
     private void addArgReportsXUnit(VRunnerContext context) {
         var reportsXUnit = new ArrayList<String>();
-        if(!reportAllure.isBlank()) {
-            reportsXUnit.add(String.format("GenerateReportAllureXMLВерсия2{%s}", reportAllure));
-        }
-        if(!reportJUnit.isBlank()) {
-            reportsXUnit.add(String.format("GenerateReportJUnitXML{%s}", reportJUnit));
-        }
+
+        addReport(reportsXUnit, "AllureXMLВерсия2", getReportAllure());
+        addReport(reportsXUnit, "JUnitXML", getReportJUnit());
 
         if(!reportsXUnit.isEmpty()) {
             context.addParameter(String.join(";", reportsXUnit), "--reportsxunit");
         }
+    }
+
+    private void addReport(List<String> reports, String reportName, String reportPath) {
+        if(reportPath.isBlank()) {
+            return;
+        }
+        reports.add(String.format("GenerateReport%s{%s}", reportName, reportPath));
     }
 
     private void addExitCodePath(VRunnerContext context) throws AbortException {

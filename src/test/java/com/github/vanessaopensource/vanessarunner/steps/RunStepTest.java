@@ -15,9 +15,9 @@ public class RunStepTest {
 
         // given
         var step = new RunStep();
-        step.execute = "$runnerRoot/epf/ЗакрытьПредприятие.epf";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setExecute("$runnerRoot/epf/ЗакрытьПредприятие.epf");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -38,10 +38,10 @@ public class RunStepTest {
 
         // given
         var step = new RunStep();
-        step.execute = "$runnerRoot/epf/ЗакрытьПредприятие.epf";
-        step.databaseCredentialsID = VRunnerRule.CREDS_ADMINISTRATOR_EMPTY;
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setExecute("$runnerRoot/epf/ЗакрытьПредприятие.epf");
+        step.setDatabaseCredentialsID(VRunnerRule.CREDS_ADMINISTRATOR_EMPTY);
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

@@ -15,10 +15,10 @@ class AddStepTest {
 
         // given
         val step = new AddStep();
-        step.testsPath = "features/addOK.feature";
-        step.reportAllure = "build/allure";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setTestsPath("features/addOK.feature");
+        step.setReportAllure("build/allure");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -39,10 +39,10 @@ class AddStepTest {
 
         // given
         val step = new AddStep();
-        step.testsPath = "features/addFail.feature";
-        step.reportJUnit = "build/junit";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setTestsPath("features/addFail.feature");
+        step.setReportJUnit("build/junit");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

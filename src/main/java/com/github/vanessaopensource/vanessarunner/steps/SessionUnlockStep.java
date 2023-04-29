@@ -1,5 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.Session;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;

@@ -14,10 +14,10 @@ public class MakeDistStepTest {
 
         // given
         val step = new MakeDistStep();
-        step.src = "src/cf";
-        step.out = "1cv8_$version.cf";
-        step.buildNumber = 9999;
-        step.language = "en";
+        step.setSrc("src/cf");
+        step.setOut("1cv8_$version.cf");
+        step.setBuildNumber(9999);
+        step.setLanguage("en");
 
         val job = r.createWorkFlowJob(step);
         val workSpace = r.createWorkSpace(job);
@@ -38,10 +38,10 @@ public class MakeDistStepTest {
 
         // given
         val step = new MakeDistStep();
-        step.src = "src/cf";
-        step.out = "1cv8_$version.cf";
-        step.withBuildNumber = true;
-        step.language = "en";
+        step.setSrc("src/cf");
+        step.setOut("1cv8_$version.cf");
+        step.setWithBuildNumber(true);
+        step.setLanguage("en");
 
         val job = r.createWorkFlowJob(step);
         val workSpace = r.createWorkSpace(job);

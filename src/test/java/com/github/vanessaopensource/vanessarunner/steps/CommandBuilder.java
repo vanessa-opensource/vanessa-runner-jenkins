@@ -1,5 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
 import com.google.common.base.Joiner;
 import org.kohsuke.stapler.DataBoundSetter;
 
@@ -40,6 +41,7 @@ public class CommandBuilder {
                .filter(x-> x.getAnnotation(DataBoundSetter.class) != null)
                .forEach(x -> {
                    try {
+                       x.setAccessible(true);
                        var fieldName = x.getName();
                        var fieldValue = x.get(step);
                        addField(fieldName, fieldValue);

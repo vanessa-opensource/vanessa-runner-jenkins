@@ -15,10 +15,10 @@ public class LoadCfeStepTest {
 
         // given
         val step = new LoadCfeStep();
-        step.file = "bin/1cv8.cfe";
-        step.extension = "Extension1";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setFile("bin/1cv8.cfe");
+        step.setExtension("Extension1");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         val job = r.createWorkFlowJob(step);
         val workSpace = r.createWorkSpace(job);
@@ -38,10 +38,10 @@ public class LoadCfeStepTest {
 
         // given
         val step = new LoadCfeStep();
-        step.src = "src/cfe";
-        step.extension = "Extension1";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setSrc("src/cfe");
+        step.setExtension("Extension1");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         val job = r.createWorkFlowJob(step);
         val workSpace = r.createWorkSpace(job);

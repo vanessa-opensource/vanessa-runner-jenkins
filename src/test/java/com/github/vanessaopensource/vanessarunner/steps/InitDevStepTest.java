@@ -14,9 +14,9 @@ public class InitDevStepTest {
 
         // given
         var step = new InitDevStep();
-        step.src = "src/cf";
-        step.noCacheUse = true;
-        step.language = "en";
+        step.setSrc("src/cf");
+        step.setNoCacheUse(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -39,10 +39,10 @@ public class InitDevStepTest {
 
         // given
         var step = new InitDevStep();
-        step.src = "src/cf";
-        step.dev = true;
-        step.noCacheUse = true;
-        step.language = "en";
+        step.setSrc("src/cf");
+        step.setDev(true);
+        step.setNoCacheUse(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -64,10 +64,10 @@ public class InitDevStepTest {
 
         // given
         var step = new InitDevStep();
-        step.src = "src/cf";
-        step.ibConnection = "/Fbuild/base1";
-        step.noCacheUse = true;
-        step.language = "en";
+        step.setSrc("src/cf");
+        step.setIbConnection("/Fbuild/base1");
+        step.setNoCacheUse(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -90,9 +90,9 @@ public class InitDevStepTest {
 
         // given
         var step = new InitDevStep();
-        step.dt = "bin/1Cv8.dt";
-        step.noCacheUse = true;
-        step.language = "en";
+        step.setDt("bin/1Cv8.dt");
+        step.setNoCacheUse(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -114,11 +114,11 @@ public class InitDevStepTest {
 
         // given
         var step = new InitDevStep();
-        step.storage = true;
-        step.storageName = "bin/storage";
-        step.storageCredentialsID = VRunnerRule.CREDS_ADMINISTRATOR_EMPTY;
-        step.noCacheUse = true;
-        step.language = "en";
+        step.setStorage(true);
+        step.setStorageName("bin/storage");
+        step.setStorageCredentialsID(VRunnerRule.CREDS_ADMINISTRATOR_EMPTY);
+        step.setNoCacheUse(true);
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

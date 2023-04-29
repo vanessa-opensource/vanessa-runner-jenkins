@@ -14,11 +14,11 @@ public class XUnitStepTest {
 
         // given
         var step = new XUnitStep();
-        step.testsPath = "testExtensionOK";
-        step.configTests = true;
-        step.ibConnection = "/Fbuild/ib";
-        step.reportJUnit = "build/junit/xunit.xml";
-        step.language = "en";
+        step.setTestsPath("testExtensionOK");
+        step.setConfigTests(true);
+        step.setIbConnection("/Fbuild/ib");
+        step.setReportJUnit("build/junit/xunit.xml");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -39,10 +39,10 @@ public class XUnitStepTest {
 
         // given
         var step = new XUnitStep();
-        step.testsPath = "testExtensionFail";
-        step.configTests = true;
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setTestsPath("testExtensionFail");
+        step.setConfigTests(true);
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);
@@ -62,10 +62,10 @@ public class XUnitStepTest {
 
         // given
         var step = new XUnitStep();
-        step.testsPath = "$addroot/tests/smoke";
-        step.ibConnection = "/Fbuild/ib";
-        step.reportAllure = "build/allure/xunit.json";
-        step.language = "en";
+        step.setTestsPath("$addroot/tests/smoke");
+        step.setIbConnection("/Fbuild/ib");
+        step.setReportAllure("build/allure/xunit.json");
+        step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);
         var workSpace = r.createWorkSpace(job);

@@ -1,35 +1,35 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public class UpdateDistStep extends VRunner {
 
-    @Getter
     @DataBoundSetter
     String file = "";
 
-    @Getter
     @DataBoundSetter
     String mergeSettings = "";
 
-    @Getter
     @DataBoundSetter
     Boolean includeObjectsByUnresolvedRefs = false;
 
-    @Getter
     @DataBoundSetter
     Boolean clearUnresolvedRefs = false;
 
-    @Getter
     @DataBoundSetter
     Boolean dumpListOfTwiceChangedProperties = false;
 
-    @Getter
     @DataBoundSetter
     Boolean force = false;
 

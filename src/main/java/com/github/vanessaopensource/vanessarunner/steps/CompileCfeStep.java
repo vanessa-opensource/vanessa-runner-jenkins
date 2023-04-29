@@ -1,5 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Compile;
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -15,8 +19,8 @@ public class CompileCfeStep extends Compile {
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("compileexttocfe");
-        context.addParameter(src, "--src");
-        context.addParameter(out, "--out");
+        context.addParameter(getSrc(), "--src");
+        context.addParameter(getOut(), "--out");
 
         super.setCommandContext(context);
     }

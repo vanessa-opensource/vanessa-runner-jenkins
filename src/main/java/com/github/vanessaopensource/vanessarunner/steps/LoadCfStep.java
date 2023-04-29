@@ -1,5 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Load;
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -15,7 +19,7 @@ public class LoadCfStep extends Load {
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("load");
-        context.addParameter(file, "--src");
+        context.addParameter(getFile(), "--src");
 
         super.setCommandContext(context);
     }

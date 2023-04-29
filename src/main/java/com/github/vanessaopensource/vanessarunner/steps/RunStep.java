@@ -1,31 +1,32 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public class RunStep extends VRunner {
 
-    @Getter
     @DataBoundSetter
     String command = "";
 
-    @Getter
     @DataBoundSetter
     String execute = "";
 
-    @Getter
     @DataBoundSetter
     Boolean noWait = false;
 
-    @Getter
     @DataBoundSetter
     String onlineFile = "";
 
-    @Getter
     @DataBoundSetter
     String exitCodePath = "";
 
@@ -38,7 +39,7 @@ public class RunStep extends VRunner {
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("run");
         context.addParameter(command, "--command");
-        context.addParameter(execute, "--execute");
+        context.addParameter(getExecute(), "--execute");
         context.addSwitch(noWait, "--no-wait");
         context.addParameter(onlineFile, "--online-file");
         context.addParameter(exitCodePath, "--exitCodePath");

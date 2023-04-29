@@ -15,9 +15,9 @@ public class LoadCfStepTest {
 
         // given
         val step = new LoadCfStep();
-        step.file = "bin/1cv8.cf";
-        step.ibConnection = "/Fbuild/ib";
-        step.language = "en";
+        step.setFile("bin/1cv8.cf");
+        step.setIbConnection("/Fbuild/ib");
+        step.setLanguage("en");
 
         val job = r.createWorkFlowJob(step);
         val workSpace = r.createWorkSpace(job);
