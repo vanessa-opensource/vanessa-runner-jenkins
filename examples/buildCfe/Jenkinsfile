@@ -9,7 +9,7 @@ String cfProjectName = 'buildCf'
 String cfFile = 'bin/1cv8_$version.cf';
 String reportJUnit = 'build/junit.xml'
 
-String ibConnection = '/Fbuild/ib'
+String ibPath = 'build/ib'
 String v8Version = '8.3.23'
 
 pipeline {
@@ -43,7 +43,7 @@ pipeline {
                     flatten: true
 
                 vrunnerInitDev cf: cfFile,
-                    ibConnection: ibConnection,
+                    ibPath: ibPath,
                     v8Version: v8Version
             }
         }
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 vrunnerLoadCfe file: cfeFile,
                     extension: extensionName,
-                    ibConnection: ibConnection,
+                    ibPath: ibPath,
                     v8Version: v8Version
             }
         }
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 vrunnerLoadCfe src: testSrcDir,
                     extension: testExtensionName,
-                    ibConnection: ibConnection,
+                    ibPath: ibPath,
                     v8Version: v8Version
             }
         }
@@ -71,7 +71,7 @@ pipeline {
                 vrunnerXUnit testsPath: testExtensionName,
                     configTests: true,
                     reportJUnit: reportJUnit,
-                    ibConnection: ibConnection,
+                    ibPath: ibPath,
                     v8Version: v8Version
             }
             post {

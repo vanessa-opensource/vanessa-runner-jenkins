@@ -1,11 +1,10 @@
-String clusterHost = 'localhost';
-String dbName = 'DefAlias'
+String ibCluster = 'localhost';
+String ibName = 'DefAlias'
 String extensionName = 'MyCfe'
 String cfeProjectName = 'buildCfe'
 String databaseCredentialsID = '';
 
 String cfeFile = 'bin/1cv8_$version.cfe';
-String ibConnection = "/S${clusterHost}\\${dbName}";
 
 String v8Version = '8.3.23'
 
@@ -27,7 +26,8 @@ pipeline {
                 vrunnerLoadCfe file: cfeFile,
                     extension: extensionName,
                     databaseCredentialsID: databaseCredentialsID,
-                    ibConnection: ibConnection,
+                    ibCluster: ibCluster,
+                    ibName: ibName,
                     v8Version: v8Version
             }
         }
@@ -36,7 +36,8 @@ pipeline {
             steps {
                 vrunnerUpdateDb extension: extensionName,
                     databaseCredentialsID: databaseCredentialsID,
-                    ibConnection: ibConnection,
+                    ibCluster: ibCluster,
+                    ibName: ibName,
                     v8Version: v8Version
             }
         }
