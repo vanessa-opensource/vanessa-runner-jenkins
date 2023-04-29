@@ -23,45 +23,18 @@ abstract public class VRunner extends Step {
     public static final String ENV_CLUSTER_PWD = "RUNNER_CLUSTERADMIN_PWD";
 
     @DataBoundSetter
-    String ibConnection = "";
-
-    @DataBoundSetter
     String databaseCredentialsID = "";
 
     @DataBoundSetter
-    String ucCode = "";
-
-    @DataBoundSetter
     String v8Version = "8.3";
-
-    @DataBoundSetter
-    Boolean noCacheUse = false;
-
-    @DataBoundSetter
-    String additional = "";
-
-    @DataBoundSetter
-    Boolean ordinaryApp = false;
-
-    @DataBoundSetter
-    String language = "";
-
-    @DataBoundSetter
-    String locale = "";
 
     @DataBoundSetter
     String settings = "";
 
     public void setCommandContext(VRunnerContext context) throws AbortException {
 
-        context.addParameter(ibConnection, "--ibconnection");
-        context.addParameter(ucCode, "--uccode");
         context.addParameter(v8Version, "--v8version");
-        context.addSwitch(noCacheUse, "--nocacheuse");
-        context.addParameter(additional, "--additional");
-        context.addSwitch(ordinaryApp, "--ordinaryapp", "1");
-        context.addParameter(language, "--language");
-        context.addParameter(locale, "--locale");
+
         context.addParameter(settings, "--settings");
 
         context.addCredentialsEnv(databaseCredentialsID, VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);

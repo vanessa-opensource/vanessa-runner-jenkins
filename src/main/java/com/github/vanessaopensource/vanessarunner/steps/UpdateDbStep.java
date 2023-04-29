@@ -3,6 +3,7 @@ package com.github.vanessaopensource.vanessarunner.steps;
 import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
 import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
 import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerInfobase;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -13,7 +14,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class UpdateDbStep extends VRunner {
+public class UpdateDbStep extends VRunnerInfobase {
 
     @DataBoundSetter
     String extension = "";

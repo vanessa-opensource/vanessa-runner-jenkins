@@ -6,7 +6,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public abstract class Load extends VRunner {
+public abstract class Load extends VRunnerInfobase {
 
     @DataBoundSetter
     String file = "";

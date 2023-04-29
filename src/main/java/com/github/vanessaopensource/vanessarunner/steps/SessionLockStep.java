@@ -17,6 +17,9 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class SessionLockStep extends Session {
 
     @DataBoundSetter
+    String ucCode = "";
+
+    @DataBoundSetter
     String lockMessage = "";
 
     @DataBoundSetter
@@ -34,6 +37,7 @@ public class SessionLockStep extends Session {
     public void setCommandContext(VRunnerContext context) throws AbortException {
         context.setCommand("session");
         context.setCommand("lock");
+        context.addParameter(ucCode, "--uccode");
         context.addParameter(lockMessage, "--lockmessage");
         context.addParameter(lockStartAt, "--lockstartat");
         context.addSwitch(lockEndClear, "--lockendclear");

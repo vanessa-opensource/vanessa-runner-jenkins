@@ -7,13 +7,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public abstract class Session extends VRunner {
-
-    @DataBoundSetter
-    String rasHost = "";
-
-    @DataBoundSetter
-    Integer rasPort = 1545;
+public abstract class Session extends VRunnerRAC {
 
     @DataBoundSetter
     String dbName = "";
@@ -28,9 +22,5 @@ public abstract class Session extends VRunner {
         context.addCredentialsEnv(clusterCredentialsID, VRunner.ENV_CLUSTER_USER, VRunner.ENV_CLUSTER_PWD);
 
         super.setCommandContext(context);
-    }
-
-    private String rasHostPort() {
-        return String.format("%s:%d", rasHost, rasPort);
     }
 }

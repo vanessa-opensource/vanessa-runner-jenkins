@@ -6,14 +6,15 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public abstract class RunTests extends VRunnerInfobase {
+public abstract class VRunnerRAC extends VRunner {
 
     @DataBoundSetter
-    String testsPath = "";
+    String rasHost = "localhost";
 
     @DataBoundSetter
-    String reportAllure = "";
+    Integer rasPort = 1545;
 
-    @DataBoundSetter
-    String reportJUnit = "";
+    String rasHostPort() {
+        return String.format("%s:%d", rasHost, rasPort);
+    }
 }
