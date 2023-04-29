@@ -1,4 +1,4 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;

@@ -1,7 +1,8 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import hudson.AbortException;
 import lombok.Getter;
+import lombok.Setter;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
@@ -10,6 +11,8 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 import java.util.Set;
 
+@Getter
+@Setter
 abstract public class VRunner extends Step {
 
     public static final String ENV_DBUSER = "RUNNER_DBUSER";
@@ -19,43 +22,33 @@ abstract public class VRunner extends Step {
     public static final String ENV_CLUSTER_USER = "RUNNER_CLUSTERADMIN_USER ";
     public static final String ENV_CLUSTER_PWD = "RUNNER_CLUSTERADMIN_PWD";
 
-    @Getter
     @DataBoundSetter
     String ibConnection = "";
 
-    @Getter
     @DataBoundSetter
     String databaseCredentialsID = "";
 
-    @Getter
     @DataBoundSetter
     String ucCode = "";
 
-    @Getter
     @DataBoundSetter
     String v8Version = "8.3";
 
-    @Getter
     @DataBoundSetter
     Boolean noCacheUse = false;
 
-    @Getter
     @DataBoundSetter
     String additional = "";
 
-    @Getter
     @DataBoundSetter
     Boolean ordinaryApp = false;
 
-    @Getter
     @DataBoundSetter
     String language = "";
 
-    @Getter
     @DataBoundSetter
     String locale = "";
 
-    @Getter
     @DataBoundSetter
     String settings = "";
 

@@ -1,24 +1,23 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import hudson.AbortException;
 import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public abstract class Session extends VRunner {
 
-    @Getter
     @DataBoundSetter
     String rasHost = "";
 
-    @Getter
     @DataBoundSetter
     Integer rasPort = 1545;
 
-    @Getter
     @DataBoundSetter
     String dbName = "";
 
-    @Getter
     @DataBoundSetter
     String clusterCredentialsID = "";
 

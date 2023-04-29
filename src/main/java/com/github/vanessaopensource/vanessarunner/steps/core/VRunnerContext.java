@@ -1,4 +1,4 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;

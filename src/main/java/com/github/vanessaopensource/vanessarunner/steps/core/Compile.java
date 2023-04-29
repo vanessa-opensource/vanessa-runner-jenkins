@@ -1,9 +1,14 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import hudson.AbortException;
+import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public abstract class Compile extends VRunner {
+
     @DataBoundSetter
     String src = "";
 

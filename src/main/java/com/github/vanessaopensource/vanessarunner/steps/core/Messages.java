@@ -1,4 +1,4 @@
-package com.github.vanessaopensource.vanessarunner.steps;
+package com.github.vanessaopensource.vanessarunner.steps.core;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
