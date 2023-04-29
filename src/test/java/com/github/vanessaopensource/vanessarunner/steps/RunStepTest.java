@@ -16,7 +16,7 @@ public class RunStepTest {
         // given
         var step = new RunStep();
         step.setExecute("$runnerRoot/epf/ЗакрытьПредприятие.epf");
-        step.setIbConnection("/Fbuild/ib");
+        step.setIbPath("build/ib");
         step.setLanguage("en");
 
         var job = r.createWorkFlowJob(step);

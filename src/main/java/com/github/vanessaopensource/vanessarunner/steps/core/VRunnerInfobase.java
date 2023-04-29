@@ -5,12 +5,28 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kohsuke.stapler.DataBoundSetter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public abstract class VRunnerInfobase extends VRunner {
 
+    private Integer DEFAULT_CLUSTER_PORT = 1541;
+
     @DataBoundSetter
     String ibConnection = "";
+
+    @DataBoundSetter
+    String ibPath = "";
+
+    @DataBoundSetter
+    String ibCluster = "";
+
+    @DataBoundSetter
+    Integer ibClusterPort = DEFAULT_CLUSTER_PORT;
+
+    @DataBoundSetter
+    String ibName = "";
 
     @DataBoundSetter
     String ucCode = "";
@@ -33,7 +49,7 @@ public abstract class VRunnerInfobase extends VRunner {
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {
 
-        context.addParameter(ibConnection, "--ibconnection");
+        context.addParameter(buildIbConnection(), "--ibconnection");
         context.addParameter(ucCode, "--uccode");
         context.addSwitch(noCacheUse, "--nocacheuse");
         context.addParameter(additional, "--additional");
@@ -42,5 +58,22 @@ public abstract class VRunnerInfobase extends VRunner {
         context.addParameter(locale, "--locale");
 
         super.setCommandContext(context);
+    }
+
+    private String buildIbConnection() {
+
+        if(!ibConnection.isBlank()) {
+            return ibConnection;
+        } else if(!ibPath.isBlank()) {
+            return String.format("/F%s", ibPath);
+        } else if(!ibCluster.isBlank() && !ibName.isBlank()) {
+            if(Objects.equals(ibClusterPort, DEFAULT_CLUSTER_PORT)) {
+                return String.format("/S%s/%s", ibCluster, ibName);
+            } else {
+                return String.format("/S%s:%d/%s", ibCluster, ibClusterPort, ibName);
+            }
+        } else {
+            return "";
+        }
     }
 }
