@@ -1,9 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
-import com.github.vanessaopensource.vanessarunner.steps.core.Session;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.steps.core.*;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -14,14 +11,14 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class SessionKillStep extends Session {
+public class SessionKillStep extends VRunnerRAC {
 
     @DataBoundSetter
     Boolean killWithNoLock = false;
 
     @DataBoundConstructor
-    public SessionKillStep() {
-        super();
+    public SessionKillStep(String dbName) {
+        super(dbName);
     }
 
     @Override

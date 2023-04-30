@@ -1,19 +1,16 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
-import com.github.vanessaopensource.vanessarunner.steps.core.Session;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.steps.core.*;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import org.kohsuke.stapler.DataBoundConstructor;
 
-public class SessionUnlockStep extends Session {
+public class SessionUnlockStep extends VRunnerRAC {
 
     @DataBoundConstructor
-    public SessionUnlockStep() {
-        super();
+    public SessionUnlockStep(String dbName) {
+        super(dbName);
     }
 
     @Override
