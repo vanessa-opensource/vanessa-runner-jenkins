@@ -2,12 +2,13 @@ package com.github.vanessaopensource.vanessarunner.steps;
 
 import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
 import com.google.common.base.Joiner;
+import lombok.val;
+import org.kohsuke.stapler.ClassDescriptor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.NoStaplerConstructorException;
 
 import javax.annotation.CheckForNull;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CommandBuilder {
 
@@ -16,7 +17,9 @@ public class CommandBuilder {
 
     public CommandBuilder(VRunner step) {
         functionName = step.getDescriptor().getFunctionName();
-        processClazz(step, step.getClass());
+
+        val constructorParamNames = constructorParamNames(step.getClass());
+        processClazz(step, step.getClass(), constructorParamNames);
     }
 
     public String build() {
@@ -34,11 +37,21 @@ public class CommandBuilder {
         return String.format(template,  build());
     }
 
-    private void processClazz(VRunner step, Class<?> clazz) {
-        var fields = clazz.getDeclaredFields();
+    private List<String> constructorParamNames(Class<? extends VRunner> clazz) {
+        var descriptor = new ClassDescriptor(clazz);
+        try {
+            return List.of(descriptor.loadConstructorParamNames());
+        } catch (NoStaplerConstructorException ex) {
+            return List.of();
+        }
+    }
 
-        Arrays.stream(fields)
-               .filter(x-> x.getAnnotation(DataBoundSetter.class) != null)
+    private void processClazz(VRunner step, Class<?> clazz, List<String> constructorParamNames) {
+        Arrays.stream(clazz.getDeclaredFields())
+               .filter(x->
+                   x.getAnnotation(DataBoundSetter.class) != null ||
+                           constructorParamNames.contains(x.getName())
+               )
                .forEach(x -> {
                    try {
                        x.setAccessible(true);
@@ -51,7 +64,7 @@ public class CommandBuilder {
                });
 
         var superclass = clazz.getSuperclass();
-        if (superclass != null) processClazz(step, superclass);
+        if (VRunner.class.isAssignableFrom(superclass)) processClazz(step, superclass, constructorParamNames);
     }
 
     private void addField(String fieldName, @CheckForNull Object fieldValue) {
