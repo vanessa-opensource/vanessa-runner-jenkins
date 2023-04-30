@@ -29,6 +29,10 @@ jenkinsPlugin {
         jenkinsServer("org.jenkins-ci.plugins","junit", "1198.ve38db_d1b_c975")
         jenkinsServer("org.jenkins-ci.plugins","copyartifact", "698.v393f578eb_ddc")
     }
+
+    gitVersion {
+        allowDirty.set(true)
+    }
 }
 
 dependencies {
@@ -49,4 +53,14 @@ tasks.server {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+tasks.generateGitVersion {
+    doLast {
+        project.version = outputFile.get().asFile.readText(Charsets.UTF_8)
+    }
+}
+
+tasks.generateJenkinsManifest {
+    dependsOn(tasks.generateGitVersion)
 }
