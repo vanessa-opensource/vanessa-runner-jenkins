@@ -10,6 +10,7 @@ import hudson.Extension;
 import hudson.FilePath;
 import hudson.slaves.WorkspaceList;
 import jenkins.model.Jenkins;
+import lombok.val;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -73,6 +74,12 @@ public class VRunnerRule {
         var future = job.scheduleBuild2(0);
         assert future != null;
         return future.get();
+    }
+
+    @NonNull
+    public WorkflowRun runStep(VRunner step) throws ExecutionException, InterruptedException, IOException {
+        val job = createWorkFlowJob(step);
+        return runJob(job);
     }
 
     public static void assertChildFileExists(String child, FilePath filePath) throws IOException, InterruptedException {
