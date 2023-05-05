@@ -6,10 +6,11 @@ import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 import java.io.IOException;
 
 public class VRunnerExecution extends SynchronousNonBlockingStepExecution<Integer> {
+    private static final long serialVersionUID = 1L;
 
     private transient final VRunner step;
 
-    public VRunnerExecution(StepContext context, VRunner step) {
+    protected VRunnerExecution(final StepContext context, final VRunner step) {
         super(context);
         this.step = step;
     }
