@@ -17,13 +17,13 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class LoadCfeStep extends Load {
 
     @DataBoundSetter
-    String extension = "";
+    private String extension = "";
 
     @DataBoundSetter
-    String src = "";
+    private String src = "";
 
     @DataBoundSetter
-    Boolean updateDb = true;
+    private Boolean updateDb = true;
 
     @DataBoundConstructor
     public LoadCfeStep() {

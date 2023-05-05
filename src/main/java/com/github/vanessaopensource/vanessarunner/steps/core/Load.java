@@ -9,5 +9,5 @@ import org.kohsuke.stapler.DataBoundSetter;
 public abstract class Load extends VRunnerInfobase {
 
     @DataBoundSetter
-    String file = "";
+    private String file = "";
 }

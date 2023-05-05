@@ -17,34 +17,34 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class InitDevStep extends VRunnerInfobase {
 
     @DataBoundSetter
-    String src = "";
+    private String src = "";
 
     @DataBoundSetter
-    String cf = "";
+    private String cf = "";
 
     @DataBoundSetter
-    String dt = "";
+    private String dt = "";
 
     @DataBoundSetter
-    Boolean dev = false;
+    private Boolean dev = false;
 
     @DataBoundSetter
-    Boolean storage = false;
+    private Boolean storage = false;
 
     @DataBoundSetter
-    String storageName = "";
+    private String storageName = "";
 
     @DataBoundSetter
-    String storageCredentialsID = "";
+    private String storageCredentialsID = "";
 
     @DataBoundSetter
-    Integer storageVer = 0;
+    private Integer storageVer = 0;
 
     @DataBoundSetter
-    Boolean v1 = false;
+    private Boolean v1 = false;
 
     @DataBoundSetter
-    Boolean v2 = false;
+    private Boolean v2 = false;
 
     @DataBoundConstructor
     public InitDevStep() {

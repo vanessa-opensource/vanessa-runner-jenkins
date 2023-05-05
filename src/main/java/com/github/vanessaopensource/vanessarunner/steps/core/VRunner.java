@@ -23,13 +23,13 @@ abstract public class VRunner extends Step {
     public static final String ENV_CLUSTER_PWD = "RUNNER_CLUSTERADMIN_PWD";
 
     @DataBoundSetter
-    String databaseCredentialsID = "";
+    private String databaseCredentialsID = "";
 
     @DataBoundSetter
-    String v8Version = "8.3";
+    private String v8Version = "8.3";
 
     @DataBoundSetter
-    String settings = "";
+    private String settings = "";
 
     public void setCommandContext(VRunnerContext context) throws AbortException {
 

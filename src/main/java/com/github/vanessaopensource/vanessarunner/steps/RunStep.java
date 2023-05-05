@@ -17,19 +17,19 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class RunStep extends VRunnerInfobase {
 
     @DataBoundSetter
-    String command = "";
+    private String command = "";
 
     @DataBoundSetter
-    String execute = "";
+    private String execute = "";
 
     @DataBoundSetter
-    Boolean noWait = false;
+    private Boolean noWait = false;
 
     @DataBoundSetter
-    String onlineFile = "";
+    private String onlineFile = "";
 
     @DataBoundSetter
-    String exitCodePath = "";
+    private String exitCodePath = "";
 
     @DataBoundConstructor
     public RunStep() {

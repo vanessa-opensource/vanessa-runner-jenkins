@@ -17,22 +17,22 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class UpdateDistStep extends VRunnerInfobase {
 
     @DataBoundSetter
-    String file = "";
+    private String file = "";
 
     @DataBoundSetter
-    String mergeSettings = "";
+    private String mergeSettings = "";
 
     @DataBoundSetter
-    Boolean includeObjectsByUnresolvedRefs = false;
+    private Boolean includeObjectsByUnresolvedRefs = false;
 
     @DataBoundSetter
-    Boolean clearUnresolvedRefs = false;
+    private Boolean clearUnresolvedRefs = false;
 
     @DataBoundSetter
-    Boolean dumpListOfTwiceChangedProperties = false;
+    private Boolean dumpListOfTwiceChangedProperties = false;
 
     @DataBoundSetter
-    Boolean force = false;
+    private Boolean force = false;
 
     @DataBoundConstructor
     public UpdateDistStep() {

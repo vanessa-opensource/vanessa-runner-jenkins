@@ -14,37 +14,37 @@ public abstract class VRunnerInfobase extends VRunner {
     private Integer DEFAULT_CLUSTER_PORT = 1541;
 
     @DataBoundSetter
-    String ibConnection = "";
+    private String ibConnection = "";
 
     @DataBoundSetter
-    String ibPath = "";
+    private String ibPath = "";
 
     @DataBoundSetter
-    String ibCluster = "";
+    private String ibCluster = "";
 
     @DataBoundSetter
-    Integer ibClusterPort = DEFAULT_CLUSTER_PORT;
+    private Integer ibClusterPort = DEFAULT_CLUSTER_PORT;
 
     @DataBoundSetter
-    String ibName = "";
+    private String ibName = "";
 
     @DataBoundSetter
-    String ucCode = "";
+    private String ucCode = "";
 
     @DataBoundSetter
-    Boolean noCacheUse = false;
+    private Boolean noCacheUse = false;
 
     @DataBoundSetter
-    String additional = "";
+    private String additional = "";
 
     @DataBoundSetter
-    Boolean ordinaryApp = false;
+    private Boolean ordinaryApp = false;
 
     @DataBoundSetter
-    String language = "";
+    private String language = "";
 
     @DataBoundSetter
-    String locale = "";
+    private String locale = "";
 
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {

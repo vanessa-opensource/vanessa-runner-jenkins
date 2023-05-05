@@ -17,16 +17,16 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class UpdateDbStep extends VRunnerInfobase {
 
     @DataBoundSetter
-    String extension = "";
+    private String extension = "";
 
     @DataBoundSetter
-    Boolean v1 = false;
+    private Boolean v1 = false;
 
     @DataBoundSetter
-    Boolean v2 = false;
+    private Boolean v2 = false;
 
     @DataBoundSetter
-    Boolean dynamic = false;
+    private Boolean dynamic = false;
 
     @DataBoundConstructor
     public UpdateDbStep() {

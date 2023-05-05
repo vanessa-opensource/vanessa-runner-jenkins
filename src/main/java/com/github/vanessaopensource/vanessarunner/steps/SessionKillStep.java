@@ -14,7 +14,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class SessionKillStep extends VRunnerRAC {
 
     @DataBoundSetter
-    Boolean killWithNoLock = false;
+    private Boolean killWithNoLock = false;
 
     @DataBoundConstructor
     public SessionKillStep(String dbName) {

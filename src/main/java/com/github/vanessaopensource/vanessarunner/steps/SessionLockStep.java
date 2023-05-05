@@ -14,16 +14,16 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class SessionLockStep extends VRunnerRAC {
 
     @DataBoundSetter
-    String ucCode = "";
+    private String ucCode = "";
 
     @DataBoundSetter
-    String lockMessage = "";
+    private String lockMessage = "";
 
     @DataBoundSetter
-    Integer lockStartAt = 0;
+    private Integer lockStartAt = 0;
 
     @DataBoundSetter
-    Boolean lockEndClear = false;
+    private Boolean lockEndClear = false;
 
     @DataBoundConstructor
     public SessionLockStep(String dbName) {

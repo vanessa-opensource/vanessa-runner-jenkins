@@ -10,19 +10,19 @@ import org.kohsuke.stapler.DataBoundSetter;
 public abstract class Compile extends VRunnerInfobase {
 
     @DataBoundSetter
-    String src = "";
+    private String src = "";
 
     @DataBoundSetter
-    String out = "";
+    private String out = "";
 
     @DataBoundSetter
-    Boolean current = false;
+    private  Boolean current = false;
 
     @DataBoundSetter
-    Integer buildNumber = 0;
+    private Integer buildNumber = 0;
 
     @DataBoundSetter
-    Boolean withBuildNumber = false;
+    private Boolean withBuildNumber = false;
 
     @Override
     public void setCommandContext(VRunnerContext context) throws AbortException {

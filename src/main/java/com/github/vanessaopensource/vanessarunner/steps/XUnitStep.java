@@ -21,7 +21,7 @@ import java.util.List;
 public class XUnitStep extends RunTests {
 
     @DataBoundSetter
-    Boolean configTests = false;
+    private Boolean configTests = false;
 
     @DataBoundConstructor
     public XUnitStep() {
