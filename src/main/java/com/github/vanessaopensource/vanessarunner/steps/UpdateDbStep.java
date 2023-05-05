@@ -34,8 +34,8 @@ public final class UpdateDbStep extends VRunnerInfobase {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
-        if(extension.isBlank()) {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
+        if (extension.isBlank()) {
             setUpdateDbCfContext(context);
         } else {
             setUpdateDbCfeContext(context);
@@ -44,14 +44,14 @@ public final class UpdateDbStep extends VRunnerInfobase {
         super.setCommandContext(context);
     }
 
-    private void setUpdateDbCfContext(VRunnerContext context) {
+    private void setUpdateDbCfContext(final VRunnerContext context) {
         context.setCommand("updatedb");
         context.addSwitch(v1, "--v1");
         context.addSwitch(v2, "--v2");
         context.addSwitch(dynamic, "--dynamic");
     }
 
-    private void setUpdateDbCfeContext(VRunnerContext context) {
+    private void setUpdateDbCfeContext(final VRunnerContext context) {
         context.setCommand("updateext");
         context.setCommand(extension);
     }

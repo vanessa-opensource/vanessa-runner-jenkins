@@ -37,7 +37,7 @@ public final class RunStep extends VRunnerInfobase {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("run");
         context.addParameter(command, "--command");
         context.addParameter(getExecute(), "--execute");

@@ -3,6 +3,7 @@ package com.github.vanessaopensource.vanessarunner.steps.core;
 import hudson.AbortException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
@@ -24,8 +25,11 @@ public abstract class Compile extends VRunnerInfobase {
     @DataBoundSetter
     private Boolean withBuildNumber = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.addSwitch(current, "--current");
         addBuildNumber(context);
@@ -33,9 +37,9 @@ public abstract class Compile extends VRunnerInfobase {
         super.setCommandContext(context);
     }
 
-    private void addBuildNumber(VRunnerContext context) {
-        if(withBuildNumber) {
-            var envBuildNumber = context.getBuildNumber();
+    private void addBuildNumber(final VRunnerContext context) {
+        if (withBuildNumber) {
+            val envBuildNumber = context.getBuildNumber();
             context.addParameter(envBuildNumber, "--build-number");
         } else {
             context.addParameter(buildNumber, "--build-number");

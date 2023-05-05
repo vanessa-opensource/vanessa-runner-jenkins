@@ -31,8 +31,8 @@ public final class LoadCfeStep extends Load {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
-        if(src.isBlank()) {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
+        if (src.isBlank()) {
             setLoadCfeFileContext(context);
         } else {
             setLoadCfeSrcContext(context);
@@ -41,14 +41,14 @@ public final class LoadCfeStep extends Load {
         super.setCommandContext(context);
     }
 
-    private void setLoadCfeFileContext(VRunnerContext context) {
+    private void setLoadCfeFileContext(final VRunnerContext context) {
         context.setCommand("loadext");
         context.addParameter(getFile(), "--file");
         context.addParameter(extension, "--extension");
         context.addSwitch(updateDb, "--updatedb");
     }
 
-    private void setLoadCfeSrcContext(VRunnerContext context) {
+    private void setLoadCfeSrcContext(final VRunnerContext context) {
         context.setCommand("compileext");
         context.setCommand(src);
         context.setCommand(extension);

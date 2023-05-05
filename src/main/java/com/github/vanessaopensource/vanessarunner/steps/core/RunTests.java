@@ -9,11 +9,11 @@ import org.kohsuke.stapler.DataBoundSetter;
 public abstract class RunTests extends VRunnerInfobase {
 
     @DataBoundSetter
-    String testsPath = "";
+    private String testsPath = "";
 
     @DataBoundSetter
-    String reportAllure = "";
+    private String reportAllure = "";
 
     @DataBoundSetter
-    String reportJUnit = "";
+    private String reportJUnit = "";
 }

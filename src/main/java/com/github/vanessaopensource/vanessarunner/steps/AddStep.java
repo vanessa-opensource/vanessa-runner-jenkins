@@ -18,7 +18,7 @@ public final class AddStep extends RunTests {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.putExitCodeResult(1, Result.UNSTABLE);
         context.putExitCodeResult(2, Result.UNSTABLE);
@@ -32,15 +32,16 @@ public final class AddStep extends RunTests {
         super.setCommandContext(context);
     }
 
-    private void setReportEnv(VRunnerContext context, String reportPath, String envReportCreate, String envReportPath) {
-        if(reportPath.isBlank()) {
+    private void setReportEnv(final VRunnerContext context, final String reportPath,
+                              final String envReportCreate, final String envReportPath) {
+        if (reportPath.isBlank()) {
             return;
         }
         context.setEnvVar(vanessaEnvKey(envReportCreate), "true");
         context.setEnvVar(vanessaEnvKey(envReportPath), reportPath);
     }
 
-    private String vanessaEnvKey(String key) {
+    private String vanessaEnvKey(final String key) {
         return String.format("VANESSA_%s", key);
     }
 

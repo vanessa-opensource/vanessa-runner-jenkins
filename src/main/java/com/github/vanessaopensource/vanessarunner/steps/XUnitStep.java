@@ -10,6 +10,7 @@ import hudson.Extension;
 import hudson.model.Result;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
@@ -29,7 +30,7 @@ public final class XUnitStep extends RunTests {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.putExitCodeResult(1, Result.UNSTABLE);
         context.putExitCodeResult(2, Result.NOT_BUILT);
@@ -44,27 +45,27 @@ public final class XUnitStep extends RunTests {
         super.setCommandContext(context);
     }
 
-    private void addArgReportsXUnit(VRunnerContext context) {
-        var reportsXUnit = new ArrayList<String>();
+    private void addArgReportsXUnit(final  VRunnerContext context) {
+        val reportsXUnit = new ArrayList<String>();
 
         addReport(reportsXUnit, "AllureXMLВерсия2", getReportAllure());
         addReport(reportsXUnit, "JUnitXML", getReportJUnit());
 
-        if(!reportsXUnit.isEmpty()) {
+        if (!reportsXUnit.isEmpty()) {
             context.addParameter(String.join(";", reportsXUnit), "--reportsxunit");
         }
     }
 
-    private void addReport(List<String> reports, String reportName, String reportPath) {
-        if(reportPath.isBlank()) {
+    private void addReport(final List<String> reports, final String reportName, final String reportPath) {
+        if (reportPath.isBlank()) {
             return;
         }
         reports.add(String.format("GenerateReport%s{%s}", reportName, reportPath));
     }
 
-    private void addExitCodePath(VRunnerContext context) throws AbortException {
+    private void addExitCodePath(final VRunnerContext context) throws AbortException {
         try {
-            var exitCodeFile = context.createTempFile("xdd_", ".run");
+            val exitCodeFile = context.createTempFile("xdd_", ".run");
             context.addParameter(exitCodeFile.getRemote(), "--xddExitCodePath");
         } catch (Exception ex) {
             throw new AbortException(ex.getLocalizedMessage());

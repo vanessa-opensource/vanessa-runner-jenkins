@@ -17,7 +17,7 @@ public final class CompileCfStep extends Compile {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("compile");
         context.addParameter(getSrc(), "--src");
         context.addParameter(getOut(), "--out");

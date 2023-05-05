@@ -11,7 +11,7 @@ import java.util.Objects;
 @Setter
 public abstract class VRunnerInfobase extends VRunner {
 
-    private Integer DEFAULT_CLUSTER_PORT = 1541;
+    public static final Integer DEFAULT_CLUSTER_PORT = 1541;
 
     @DataBoundSetter
     private String ibConnection = "";
@@ -46,8 +46,11 @@ public abstract class VRunnerInfobase extends VRunner {
     @DataBoundSetter
     private String locale = "";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.addParameter(buildIbConnection(), "--ibconnection");
         context.addParameter(ucCode, "--uccode");
@@ -62,12 +65,12 @@ public abstract class VRunnerInfobase extends VRunner {
 
     private String buildIbConnection() {
 
-        if(!ibConnection.isBlank()) {
+        if (!ibConnection.isBlank()) {
             return ibConnection;
-        } else if(!ibPath.isBlank()) {
+        } else if (!ibPath.isBlank()) {
             return String.format("/F%s", ibPath);
-        } else if(!ibCluster.isBlank() && !ibName.isBlank()) {
-            if(Objects.equals(ibClusterPort, DEFAULT_CLUSTER_PORT)) {
+        } else if (!ibCluster.isBlank() && !ibName.isBlank()) {
+            if (Objects.equals(ibClusterPort, DEFAULT_CLUSTER_PORT)) {
                 return String.format("/S%s/%s", ibCluster, ibName);
             } else {
                 return String.format("/S%s:%d/%s", ibCluster, ibClusterPort, ibName);

@@ -11,26 +11,30 @@ import java.util.Objects;
 @Setter
 public abstract class VRunnerRAC extends VRunner {
 
-    private static Integer DEFAULT_RAS_PORT = 1545;
-    private static String DEFAULT_RAS_HOST = "localhost";
+    private static final Integer DEFAULT_RAS_PORT = 1545;
+    private static final String DEFAULT_RAS_HOST = "localhost";
 
-    final String dbName;
-
-    @DataBoundSetter
-    String rasHost = DEFAULT_RAS_HOST;
+    private final String dbName;
 
     @DataBoundSetter
-    Integer rasPort = DEFAULT_RAS_PORT;
+    private String rasHost = DEFAULT_RAS_HOST;
 
     @DataBoundSetter
-    String clusterCredentialsID = "";
+    private Integer rasPort = DEFAULT_RAS_PORT;
 
-    protected VRunnerRAC(String dbName) {
+    @DataBoundSetter
+    private String clusterCredentialsID = "";
+
+    protected VRunnerRAC(final String dbName) {
         assert !dbName.isBlank();
         this.dbName = dbName;
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.addParameter(rasHostPort(), "--ras");
         context.addParameter(dbName, "--db");
         context.addCredentialsEnv(clusterCredentialsID, VRunner.ENV_CLUSTER_USER, VRunner.ENV_CLUSTER_PWD);
@@ -38,7 +42,7 @@ public abstract class VRunnerRAC extends VRunner {
 
     private String rasHostPort() {
 
-        if(Objects.equals(rasPort, DEFAULT_RAS_PORT)) {
+        if (Objects.equals(rasPort, DEFAULT_RAS_PORT)) {
             return rasHost;
         } else {
             return String.format("%s:%d", rasHost, rasPort);

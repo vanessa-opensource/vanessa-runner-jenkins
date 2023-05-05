@@ -1,6 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.*;
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerRAC;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -9,12 +12,12 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public final class SessionUnlockStep extends VRunnerRAC {
 
     @DataBoundConstructor
-    public SessionUnlockStep(String dbName) {
+    public SessionUnlockStep(final String dbName) {
         super(dbName);
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("session");
         context.setCommand("unlock");
 

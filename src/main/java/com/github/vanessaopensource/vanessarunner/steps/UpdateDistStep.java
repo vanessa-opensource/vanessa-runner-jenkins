@@ -40,7 +40,7 @@ public final class UpdateDistStep extends VRunnerInfobase {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("update");
         context.addParameter(file, "--src");
         context.addParameter(mergeSettings, "--update-settings");

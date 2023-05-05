@@ -1,5 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps.core;
 
+import lombok.val;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 
@@ -8,17 +9,20 @@ import java.io.IOException;
 public class VRunnerExecution extends SynchronousNonBlockingStepExecution<Integer> {
     private static final long serialVersionUID = 1L;
 
-    private transient final VRunner step;
+    private final transient  VRunner step;
 
     protected VRunnerExecution(final StepContext context, final VRunner step) {
         super(context);
         this.step = step;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Integer run() throws Exception {
 
-        var context = new VRunnerContext(getContext());
+        val context = new VRunnerContext(getContext());
 
         step.setCommandContext(context);
 
@@ -29,9 +33,9 @@ public class VRunnerExecution extends SynchronousNonBlockingStepExecution<Intege
         return 0;
     }
 
-    private void executeVRunner(VRunnerContext context) throws IOException, InterruptedException {
+    private void executeVRunner(final VRunnerContext context) throws IOException, InterruptedException {
 
-        var exitCode = context.createStarter().join();
+        val exitCode = context.createStarter().join();
 
         if (exitCode != 0) {
             context.verifyExitCode(exitCode);

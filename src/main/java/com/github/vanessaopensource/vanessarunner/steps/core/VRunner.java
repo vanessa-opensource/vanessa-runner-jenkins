@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-abstract public class VRunner extends Step {
+public abstract class VRunner extends Step {
 
     public static final String ENV_DBUSER = "RUNNER_DBUSER";
     public static final String ENV_DBPWD = "RUNNER_DBPWD";
@@ -31,7 +31,7 @@ abstract public class VRunner extends Step {
     @DataBoundSetter
     private String settings = "";
 
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.addParameter(v8Version, "--v8version");
 
@@ -40,12 +40,19 @@ abstract public class VRunner extends Step {
         context.addCredentialsEnv(databaseCredentialsID, VRunner.ENV_DBUSER, VRunner.ENV_DBPWD);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public StepExecution start(StepContext context)  {
+    public StepExecution start(final StepContext context)  {
         return new VRunnerExecution(context, this);
     }
 
     public abstract static class Descriptor extends StepDescriptor {
+
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Set<? extends Class<?>> getRequiredContext() {
             return VRunnerContext.getRequiredContext();

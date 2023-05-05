@@ -17,7 +17,7 @@ public final class MakeDistStep extends Compile {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("make-dist");
         context.setCommand(getOut());
         context.addParameter(getSrc(), "--src");

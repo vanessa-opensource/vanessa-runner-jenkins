@@ -14,6 +14,7 @@ import hudson.model.TaskListener;
 import hudson.slaves.WorkspaceList;
 import hudson.util.ArgumentListBuilder;
 import hudson.util.Secret;
+import lombok.val;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class VRunnerContext {
+public final class VRunnerContext {
 
     private final ArgumentListBuilder args = new ArgumentListBuilder();
 
@@ -41,7 +42,7 @@ public class VRunnerContext {
                 TaskListener.class, Run.class);
     }
 
-    public VRunnerContext(StepContext stepContext) throws IOException, InterruptedException {
+    public VRunnerContext(final StepContext stepContext) throws IOException, InterruptedException {
 
         launcher = Objects.requireNonNull(stepContext.get(Launcher.class));
         env = Objects.requireNonNull(stepContext.get(EnvVars.class));
@@ -49,65 +50,65 @@ public class VRunnerContext {
         listener = Objects.requireNonNull(stepContext.get(TaskListener.class));
         run = Objects.requireNonNull(stepContext.get(Run.class));
 
-        var workSpaceTmp = WorkspaceList.tempDir(workSpace);
+        val workSpaceTmp = WorkspaceList.tempDir(workSpace);
         assert workSpaceTmp != null;
         workSpace.mkdirs();
         workSpaceTmp.mkdirs();
         tempDir = workSpaceTmp.createTempDir("vrunner", "tmp");
     }
 
-    public void setCommand(String command) {
+    public void setCommand(final String command) {
         args.add(command);
     }
 
-    public void addSwitch(Boolean switchId, String key) {
+    public void addSwitch(final Boolean switchId, final String key) {
         if (switchId) {
             args.add(key);
         }
     }
 
-    public void addSwitch(Boolean switchId, String key, String value) {
+    public void addSwitch(final Boolean switchId, final String key, final String value) {
         if (switchId) {
             args.add(key).add(value);
         }
     }
 
-    public void addParameter(String value, String key) {
+    public void addParameter(final String value, final String key) {
         if (!value.isBlank()) {
             args.add(key).add(value);
         }
 
     }
 
-    public void addParameter(Integer value, String key) {
+    public void addParameter(final Integer value, final String key) {
         if (value != 0) {
             args.add(key).add(value.toString());
         }
     }
 
-    public void addCredentialsEnv(String id, String usernameEnv, String passwordEnv) throws AbortException {
+    public void addCredentialsEnv(final String id, final String usernameEnv, final String passwordEnv) throws AbortException {
         if (id.isBlank()) {
             return;
         }
 
-        var credentials = CredentialsProvider.findCredentialById(id,
+        val credentials = CredentialsProvider.findCredentialById(id,
                 StandardUsernamePasswordCredentials.class,
                 run);
         if (credentials == null) {
-            var message = String.format(Messages.getString("VRunnerExecution.CredentialsNotFound"), id);
+            val message = String.format(Messages.getString("VRunnerExecution.CredentialsNotFound"), id);
             throw new AbortException(String.format(message, id));
         }
 
-        var username = credentials.getUsername();
-        if(username.isBlank()) {
+        val username = credentials.getUsername();
+        if (username.isBlank()) {
             return;
         }
-        var password = Secret.toString(credentials.getPassword());
+        val password = Secret.toString(credentials.getPassword());
         env.put(usernameEnv, username);
         env.put(passwordEnv, password);
     }
 
-    public void setEnvVar(String key, String value) {
+    public void setEnvVar(final String key, final String value) {
         env.put(key, value);
     }
 
@@ -115,13 +116,13 @@ public class VRunnerContext {
         return run.number;
     }
 
-    public void putExitCodeResult(Integer exitCode, Result result) {
+    public void putExitCodeResult(final Integer exitCode, final Result result) {
         exitCodes.put(exitCode, result);
     }
 
-    public void verifyExitCode(Integer exitCode) throws AbortException {
+    public void verifyExitCode(final Integer exitCode) throws AbortException {
         if (exitCodes.containsKey(exitCode)) {
-            var result = exitCodes.get(exitCode);
+            val result = exitCodes.get(exitCode);
             run.setResult(result);
         } else {
             throw new AbortException(String.format(Messages.getString("VRunnerExecution.RunAborted"), exitCode));
@@ -138,7 +139,7 @@ public class VRunnerContext {
 
     public Launcher.ProcStarter createStarter() {
 
-        var launcherArgs = launcherArgs();
+        val launcherArgs = launcherArgs();
         launcherArgs.add(args.toList());
 
         return launcher.launch().cmds(launcherArgs)
@@ -151,7 +152,7 @@ public class VRunnerContext {
     @NonNull
     private ArgumentListBuilder launcherArgs() {
 
-        var launcherArgs = new ArgumentListBuilder();
+        val launcherArgs = new ArgumentListBuilder();
         if (launcher.isUnix()) {
             launcherArgs.add("vrunner");
         } else {

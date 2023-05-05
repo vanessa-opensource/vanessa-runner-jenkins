@@ -17,7 +17,7 @@ public final class LoadCfStep extends Load {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("load");
         context.addParameter(getFile(), "--src");
 

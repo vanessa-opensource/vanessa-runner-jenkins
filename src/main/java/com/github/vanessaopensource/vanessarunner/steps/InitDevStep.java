@@ -52,7 +52,7 @@ public final class InitDevStep extends VRunnerInfobase {
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
         context.setCommand("init-dev");
         context.addParameter(src, "--src");
         context.addParameter(cf, "--cf");

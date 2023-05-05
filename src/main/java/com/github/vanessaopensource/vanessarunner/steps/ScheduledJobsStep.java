@@ -1,6 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.*;
+import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerRAC;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
@@ -15,13 +18,13 @@ public final class ScheduledJobsStep extends VRunnerRAC {
     private final Boolean lock;
 
     @DataBoundConstructor
-    public ScheduledJobsStep(Boolean lock, String dbName) {
+    public ScheduledJobsStep(final Boolean lock, final String dbName) {
         super(dbName);
         this.lock = lock;
     }
 
     @Override
-    public void setCommandContext(VRunnerContext context) throws AbortException {
+    public void setCommandContext(final VRunnerContext context) throws AbortException {
 
         context.setCommand("scheduledjobs");
         if (lock) {
