@@ -14,7 +14,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class LoadCfeStep extends Load {
+public final class LoadCfeStep extends Load {
 
     @DataBoundSetter
     private String extension = "";
@@ -57,7 +57,7 @@ public class LoadCfeStep extends Load {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

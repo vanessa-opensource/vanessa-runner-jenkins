@@ -11,7 +11,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class SessionLockStep extends VRunnerRAC {
+public final class SessionLockStep extends VRunnerRAC {
 
     @DataBoundSetter
     private String ucCode = "";
@@ -44,7 +44,7 @@ public class SessionLockStep extends VRunnerRAC {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

@@ -11,7 +11,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class SessionKillStep extends VRunnerRAC {
+public final class SessionKillStep extends VRunnerRAC {
 
     @DataBoundSetter
     private Boolean killWithNoLock = false;
@@ -33,7 +33,7 @@ public class SessionKillStep extends VRunnerRAC {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

@@ -10,7 +10,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 @Getter
 @Setter
-public class ScheduledJobsStep extends VRunnerRAC {
+public final class ScheduledJobsStep extends VRunnerRAC {
 
     private final Boolean lock;
 
@@ -35,7 +35,7 @@ public class ScheduledJobsStep extends VRunnerRAC {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

@@ -9,7 +9,7 @@ import hudson.AbortException;
 import hudson.Extension;
 import org.kohsuke.stapler.DataBoundConstructor;
 
-public class MakeDistStep extends Compile {
+public final class MakeDistStep extends Compile {
 
     @DataBoundConstructor
     public MakeDistStep() {
@@ -27,7 +27,7 @@ public class MakeDistStep extends Compile {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

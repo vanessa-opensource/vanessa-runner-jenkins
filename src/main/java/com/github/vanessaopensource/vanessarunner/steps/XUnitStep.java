@@ -18,7 +18,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class XUnitStep extends RunTests {
+public final class XUnitStep extends RunTests {
 
     @DataBoundSetter
     private Boolean configTests = false;
@@ -73,7 +73,7 @@ public class XUnitStep extends RunTests {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

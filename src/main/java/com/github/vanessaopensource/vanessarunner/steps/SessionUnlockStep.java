@@ -6,7 +6,7 @@ import hudson.AbortException;
 import hudson.Extension;
 import org.kohsuke.stapler.DataBoundConstructor;
 
-public class SessionUnlockStep extends VRunnerRAC {
+public final class SessionUnlockStep extends VRunnerRAC {
 
     @DataBoundConstructor
     public SessionUnlockStep(String dbName) {
@@ -23,7 +23,7 @@ public class SessionUnlockStep extends VRunnerRAC {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {

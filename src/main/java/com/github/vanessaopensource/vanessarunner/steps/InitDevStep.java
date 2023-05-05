@@ -14,7 +14,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 @Getter
 @Setter
-public class InitDevStep extends VRunnerInfobase {
+public final class InitDevStep extends VRunnerInfobase {
 
     @DataBoundSetter
     private String src = "";
@@ -71,7 +71,7 @@ public class InitDevStep extends VRunnerInfobase {
 
     @Extension
     @SuppressWarnings("unused")
-    public static class DescriptorImpl extends VRunner.Descriptor {
+    public static final class DescriptorImpl extends VRunner.Descriptor {
 
         @Override
         public String getFunctionName() {
