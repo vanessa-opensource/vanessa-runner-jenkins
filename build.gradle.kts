@@ -1,6 +1,5 @@
 plugins {
     java
-    id("com.github.spotbugs") version "5.0.14"
     id("org.jenkins-ci.jpi") version "0.48.0"
     id("io.franzbecker.gradle-lombok") version "5.0.0"
 }
@@ -33,6 +32,10 @@ jenkinsPlugin {
     gitVersion {
         allowDirty.set(true)
     }
+
+    enableCheckstyle()
+    enableJacoco()
+    enableSpotBugs()
 }
 
 dependencies {
@@ -63,4 +66,8 @@ tasks.generateGitVersion {
 
 tasks.generateJenkinsManifest {
     dependsOn(tasks.generateGitVersion)
+}
+
+tasks.withType<Checkstyle> {
+    ignoreFailures = true
 }
