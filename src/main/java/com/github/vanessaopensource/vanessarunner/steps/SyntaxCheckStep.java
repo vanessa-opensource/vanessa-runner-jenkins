@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class SyntaxCheckStep extends VRunnerInfobase {
+public final class SyntaxCheckStep extends VRunnerInfobase {
 
     /**
      * Performed checks.
