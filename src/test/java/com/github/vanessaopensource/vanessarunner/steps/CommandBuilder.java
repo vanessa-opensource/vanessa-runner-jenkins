@@ -9,6 +9,7 @@ import org.kohsuke.stapler.NoStaplerConstructorException;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CommandBuilder {
 
@@ -24,7 +25,7 @@ public class CommandBuilder {
 
     public String build() {
 
-        if(parameters.isEmpty()) {
+        if (parameters.isEmpty()) {
             return String.format("%s()", functionName);
         } else {
             return String.format("%s %s", functionName,
@@ -79,20 +80,40 @@ public class CommandBuilder {
             addField(fieldName, (Boolean) fieldValue);
         } else if (fieldValue instanceof Integer) {
             addField(fieldName, (Integer) fieldValue);
+        } else if (fieldValue instanceof Collection) {
+            addField(fieldName, (Collection<?>) fieldValue);
         } else {
             addField(fieldName, fieldValue.toString());
         }
     }
 
     private void addField(String fieldName, String fieldValue) {
-        parameters.put(fieldName, String.format("'%s'", fieldValue));
+        if (!fieldValue.isBlank()) {
+            parameters.put(fieldName, String.format("'%s'", fieldValue));
+        }
     }
 
     private void addField(String fieldName, Boolean fieldValue) {
-        parameters.put(fieldName, String.format("%b", fieldValue));
+        if (fieldValue) {
+            parameters.put(fieldName, String.format("%b", true));
+        }
     }
 
     private void addField(String fieldName, Integer fieldValue) {
-        parameters.put(fieldName, String.format("%d", fieldValue));
+        if (fieldValue != 0) {
+            parameters.put(fieldName, String.format("%d", fieldValue));
+        }
+    }
+
+    private void addField(String fieldName, Collection<?> fieldValue) {
+
+        if (fieldValue.isEmpty()) {
+            return;
+        }
+
+        val value = fieldValue.stream()
+                .map(x -> String.format("'%s'", x.toString()))
+                .collect(Collectors.joining(", ", "[", "]"));
+        parameters.put(fieldName, value);
     }
 }
