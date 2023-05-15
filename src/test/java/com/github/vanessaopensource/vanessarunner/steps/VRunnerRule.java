@@ -15,11 +15,13 @@ import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jvnet.hudson.test.JenkinsRule;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Extension
 public class VRunnerRule {
@@ -57,8 +59,7 @@ public class VRunnerRule {
     @NonNull
     public FilePath createWorkSpace(WorkflowJob job) throws IOException, InterruptedException {
 
-        var workspace = jenkins.getWorkspaceFor(job);
-        assert workspace != null;
+        val workspace = getWorkspaceFor(job);
         workspace.mkdirs();
 
         var tempDir = WorkspaceList.tempDir(workspace);
@@ -82,8 +83,24 @@ public class VRunnerRule {
         return runJob(job);
     }
 
+    @NonNull
+    public WorkflowRun runStep(VRunner step, Class<?> clazz) throws Exception {
+        val job = createWorkFlowJob(step);
+        val workSpace = createWorkSpace(job);
+        createLocalData(clazz, workSpace);
+        return runJob(job);
+    }
+
     public static void assertChildFileExists(String child, FilePath filePath) throws IOException, InterruptedException {
         assert filePath.child(child).exists();
+    }
+
+    public void assertChildFileExists(String child, WorkflowRun run) throws IOException, InterruptedException {
+
+        val job = run.getParent();
+        val workSpace = getWorkspaceFor(job);
+
+        assertTrue(workSpace.child(child).exists());
     }
 
     public static void provideCredentialsAdministratorEmpty() {
@@ -121,5 +138,9 @@ public class VRunnerRule {
         }
 
         throw new AssertionError("No test resource was found");
+    }
+
+    private FilePath getWorkspaceFor(final WorkflowJob job) {
+        return Objects.requireNonNull(jenkins.getWorkspaceFor(job));
     }
 }
