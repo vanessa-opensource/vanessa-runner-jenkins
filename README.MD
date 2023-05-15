@@ -20,6 +20,9 @@ Run BDD, Unit and Smoke tests with a help of [Vanessa-ADD](https://github.com/va
 Also, provides helper step:
 * `vrunnerInitDev` - creates local file infobase to run tests
 
+# Code quality
+* `vrunnerSyntaxCheck` - performs extended configuration check.
+
 # Deploy
 * `vrunnerLoadCf` - loads configuration from a file.
 * `vrunnerLoadCfe` - loads configuration extension from a file.
