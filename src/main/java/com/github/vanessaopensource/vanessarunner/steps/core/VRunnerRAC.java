@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public abstract class VRunnerRAC extends VRunner {
+public abstract class VRunnerRAC extends VRunnerPlatform {
 
     private static final Integer DEFAULT_RAS_PORT = 1545;
     private static final String DEFAULT_RAS_HOST = "localhost";

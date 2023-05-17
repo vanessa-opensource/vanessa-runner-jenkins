@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public abstract class VRunnerInfobase extends VRunner {
+public abstract class VRunnerInfobase extends VRunnerPlatform {
 
     public static final Integer DEFAULT_CLUSTER_PORT = 1541;
 
