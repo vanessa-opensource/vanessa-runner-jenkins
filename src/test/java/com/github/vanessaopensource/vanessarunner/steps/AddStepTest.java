@@ -20,17 +20,13 @@ class AddStepTest {
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(AddStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, AddStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("ИНФОРМАЦИЯ - Все фичи/сценарии выполнены!", run);
-        VRunnerRule.assertChildFileExists("build/allure", workSpace);
+        r.assertChildFileExists("build/allure", run);
     }
 
     @Test
@@ -44,16 +40,12 @@ class AddStepTest {
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(AddStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, AddStepTest.class);
 
         // then
         j.assertBuildStatus(Result.UNSTABLE, run);
         j.assertLogContains("ОШИБКА - Часть фич/сценариев упала!", run);
-        VRunnerRule.assertChildFileExists("build/junit", workSpace);
+        r.assertChildFileExists("build/junit", run);
     }
 }

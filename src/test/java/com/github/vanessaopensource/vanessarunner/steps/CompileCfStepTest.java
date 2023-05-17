@@ -20,18 +20,14 @@ public class CompileCfStepTest {
         step.setBuildNumber(9999);
         step.setLanguage("en");
 
-        val job = r.createWorkFlowJob(step);
-        val workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
-
         // when
-        val run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, InitDevStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("Выгрузка в файл завершена.", run);
         j.assertLogContains("Configuration successfully saved", run);
-        VRunnerRule.assertChildFileExists("1cv8_1.0.0.9999.cf", workSpace);
+        r.assertChildFileExists("1cv8_1.0.0.9999.cf", run);
     }
 
     @Test
@@ -45,17 +41,13 @@ public class CompileCfStepTest {
         step.setWithBuildNumber(true);
         step.setLanguage("en");
 
-        val job = r.createWorkFlowJob(step);
-        val workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(InitDevStepTest.class, workSpace);
-
         // when
-        val run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, InitDevStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("Выгрузка в файл завершена.", run);
         j.assertLogContains("Configuration successfully saved", run);
-        VRunnerRule.assertChildFileExists("1cv8_1.0.0.1.cf", workSpace);
+        r.assertChildFileExists("1cv8_1.0.0.1.cf", run);
     }
 }

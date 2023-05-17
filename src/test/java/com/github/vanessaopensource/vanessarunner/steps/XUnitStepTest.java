@@ -1,6 +1,7 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import hudson.model.Result;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
@@ -9,47 +10,39 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 public class XUnitStepTest {
 
     @Test
-    public void runConfigTestsOK(JenkinsRule j) throws Exception {
-        var r = VRunnerRule.createRule(j);
+    public void runConfigTestsOK(final JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
 
         // given
-        var step = new XUnitStep();
+        val step = new XUnitStep();
         step.setTestsPath("testExtensionOK");
         step.setConfigTests(true);
         step.setIbConnection("/Fbuild/ib");
         step.setReportJUnit("build/junit/xunit.xml");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(XUnitStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, XUnitStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("ИНФОРМАЦИЯ - Все тесты выполнены!", run);
-        VRunnerRule.assertChildFileExists("build/junit", workSpace);
+        r.assertChildFileExists("build/junit", run);
     }
 
     @Test
-    public void runConfigTestsFail(JenkinsRule j) throws Exception {
-        var r = VRunnerRule.createRule(j);
+    public void runConfigTestsFail(final JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
 
         // given
-        var step = new XUnitStep();
+        val step = new XUnitStep();
         step.setTestsPath("testExtensionFail");
         step.setConfigTests(true);
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(XUnitStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, XUnitStepTest.class);
 
         // then
         j.assertBuildStatus(Result.UNSTABLE, run);
@@ -57,26 +50,22 @@ public class XUnitStepTest {
     }
 
     @Test
-    public void runSmokeTests(JenkinsRule j) throws Exception {
-        var r = VRunnerRule.createRule(j);
+    public void runSmokeTests(final JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
 
         // given
-        var step = new XUnitStep();
+        val step = new XUnitStep();
         step.setTestsPath("$addroot/tests/smoke");
         step.setIbConnection("/Fbuild/ib");
         step.setReportAllure("build/allure/xunit.json");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(XUnitStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, XUnitStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
         j.assertLogContains("ИНФОРМАЦИЯ - Все тесты выполнены!", run);
-        VRunnerRule.assertChildFileExists("build/allure", workSpace);
+        r.assertChildFileExists("build/allure", run);
     }
 }

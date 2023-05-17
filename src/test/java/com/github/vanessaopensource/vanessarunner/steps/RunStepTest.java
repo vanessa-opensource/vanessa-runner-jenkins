@@ -1,6 +1,7 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
 import hudson.model.Result;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
@@ -9,22 +10,17 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 public class RunStepTest {
 
     @Test
-    public void runCloseEnterprise(JenkinsRule j) throws Exception {
-
-        var r = VRunnerRule.createRule(j);
+    public void runCloseEnterprise(final JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
 
         // given
-        var step = new RunStep();
+        val step = new RunStep();
         step.setExecute("$runnerRoot/epf/ЗакрытьПредприятие.epf");
         step.setIbPath("build/ib");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(RunStepTest.class, workSpace);
-
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, RunStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
@@ -32,24 +28,20 @@ public class RunStepTest {
     }
 
     @Test
-    public void runInvalidUser(JenkinsRule j) throws Exception {
-
-        var r = VRunnerRule.createRule(j);
+    public void runInvalidUser(final JenkinsRule j) throws Exception {
+        val r = VRunnerRule.createRule(j);
 
         // given
-        var step = new RunStep();
+        val step = new RunStep();
         step.setExecute("$runnerRoot/epf/ЗакрытьПредприятие.epf");
         step.setDatabaseCredentialsID(VRunnerRule.CREDS_ADMINISTRATOR_EMPTY);
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
 
-        var job = r.createWorkFlowJob(step);
-        var workSpace = r.createWorkSpace(job);
         VRunnerRule.provideCredentialsAdministratorEmpty();
-        VRunnerRule.createLocalData(RunStepTest.class, workSpace);
 
         // when
-        var run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, RunStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);

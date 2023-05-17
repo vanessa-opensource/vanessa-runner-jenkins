@@ -10,7 +10,7 @@ import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 public class LoadCfStepTest {
 
     @Test
-    public void loadCf(JenkinsRule j) throws Exception {
+    public void loadCf(final JenkinsRule j) throws Exception {
         val r = VRunnerRule.createRule(j);
 
         // given
@@ -19,12 +19,8 @@ public class LoadCfStepTest {
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
 
-        val job = r.createWorkFlowJob(step);
-        val workSpace = r.createWorkSpace(job);
-        VRunnerRule.createLocalData(LoadCfStepTest.class, workSpace);
-
         // when
-        val run = VRunnerRule.runJob(job);
+        val run = r.runStep(step, LoadCfStepTest.class);
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);

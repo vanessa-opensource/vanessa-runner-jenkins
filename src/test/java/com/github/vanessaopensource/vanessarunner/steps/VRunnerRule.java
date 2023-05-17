@@ -41,7 +41,7 @@ public class VRunnerRule {
     }
 
     @NonNull
-    public WorkflowJob createWorkFlowJob(String script) throws IOException {
+    private WorkflowJob createWorkFlowJob(String script) throws IOException {
 
         var job = j.createProject(WorkflowJob.class);
         var definition = new CpsFlowDefinition(script, false);
@@ -51,13 +51,13 @@ public class VRunnerRule {
     }
 
     @NonNull
-    public WorkflowJob createWorkFlowJob(VRunner step) throws IOException {
+    private WorkflowJob createWorkFlowJob(VRunner step) throws IOException {
         var script = new CommandBuilder(step).buildScript();
         return createWorkFlowJob(script);
     }
 
     @NonNull
-    public FilePath createWorkSpace(WorkflowJob job) throws IOException, InterruptedException {
+    private FilePath createWorkSpace(WorkflowJob job) throws IOException, InterruptedException {
 
         val workspace = getWorkspaceFor(job);
         workspace.mkdirs();
@@ -70,7 +70,7 @@ public class VRunnerRule {
     }
 
     @NonNull
-    public static WorkflowRun runJob(WorkflowJob job) throws ExecutionException, InterruptedException {
+    private static WorkflowRun runJob(WorkflowJob job) throws ExecutionException, InterruptedException {
 
         var future = job.scheduleBuild2(0);
         assert future != null;
@@ -89,10 +89,6 @@ public class VRunnerRule {
         val workSpace = createWorkSpace(job);
         createLocalData(clazz, workSpace);
         return runJob(job);
-    }
-
-    public static void assertChildFileExists(String child, FilePath filePath) throws IOException, InterruptedException {
-        assert filePath.child(child).exists();
     }
 
     public void assertChildFileExists(String child, WorkflowRun run) throws IOException, InterruptedException {
@@ -119,11 +115,7 @@ public class VRunnerRule {
         credentialsProvider.add(credentials);
     }
 
-    public static void createLocalData(Class<?> clazz, FilePath workspace) throws Exception {
-        createLocalData(clazz, "", workspace);
-    }
-
-    public static void createLocalData(Class<?> clazz, String alterName, FilePath workspace) throws Exception {
+    private static void createLocalData(Class<?> clazz, FilePath workspace) throws Exception {
         var res = findDataResource(clazz);
         var source = new File(res.toURI());
         new FilePath(source).unzip(workspace);
