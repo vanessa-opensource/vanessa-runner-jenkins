@@ -129,8 +129,24 @@ public final class VRunnerContext {
         }
     }
 
-    public FilePath createTempFile(final String prefix, final String suffix) throws IOException, InterruptedException {
-        return tempDir.createTempFile(prefix, suffix);
+    public FilePath createTempFile(final String prefix, final String suffix) throws AbortException {
+        try {
+            return tempDir.createTempFile(prefix, suffix);
+        } catch (Exception ex) {
+            throw new AbortException(ex.getLocalizedMessage());
+        }
+    }
+
+    public FilePath createTempDir(final String prefix, final String suffix) throws AbortException {
+        try {
+            return tempDir.createTempDir(prefix, suffix);
+        } catch (Exception ex) {
+            throw new AbortException(ex.getLocalizedMessage());
+        }
+    }
+
+    public FilePath workspaceChild(final String child) {
+        return workSpace.child(child);
     }
 
     public void cleanup() throws IOException, InterruptedException {

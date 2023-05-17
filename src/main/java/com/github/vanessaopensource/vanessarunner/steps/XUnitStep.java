@@ -64,12 +64,8 @@ public final class XUnitStep extends RunTests {
     }
 
     private void addExitCodePath(final VRunnerContext context) throws AbortException {
-        try {
-            val exitCodeFile = context.createTempFile("xdd_", ".run");
-            context.addParameter(exitCodeFile.getRemote(), "--xddExitCodePath");
-        } catch (Exception ex) {
-            throw new AbortException(ex.getLocalizedMessage());
-        }
+        val exitCodeFile = context.createTempFile("xdd_", ".run");
+        context.addParameter(exitCodeFile.getRemote(), "--xddExitCodePath");
     }
 
     @Extension
