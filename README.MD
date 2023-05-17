@@ -22,6 +22,7 @@ Also, provides helper step:
 
 # Code quality
 * `vrunnerSyntaxCheck` - performs extended configuration check.
+* `vrunnerEdtValidate` - validate the 1C:Enterprise Development Tools project.
 
 # Deploy
 * `vrunnerLoadCf` - loads configuration from a file.
