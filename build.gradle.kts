@@ -9,7 +9,7 @@ repositories {
 }
 
 jenkinsPlugin {
-    setProperty("jenkinsVersion", "2.375")
+    setProperty("jenkinsVersion", "2.387")
 
     displayName = "Vanessa-runner tool support"
     gitHubUrl = "https://github.com/vanessa-opensource/vanessa-runner-jenkins"
@@ -18,14 +18,14 @@ jenkinsPlugin {
         implementation("org.jenkins-ci.plugins.workflow", "workflow-step-api", "639.v6eca_cd8c04a_a_")
         implementation("org.jenkins-ci.plugins", "credentials", "1224.vc23ca_a_9a_2cb_0")
 
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-basic-steps", "991.v43d80fea_ff66")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3641.vf58904a_b_b_5d8")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1199.v02b_9244f8064")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1284.v2fe8ed4573d4")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-basic-steps", "1017.vb_45b_302f0cea_")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3659.v582dc37621d8")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1246.v5524618ea_097")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1292.v27d8cc3e2602")
 
-        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2125.vddb_a_44a_d605e")
-        jenkinsServer("org.jenkins-ci.plugins","git", "5.0.0")
-        jenkinsServer("org.jenkins-ci.plugins","junit", "1198.ve38db_d1b_c975")
+        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2131.vb_9788088fdb_5")
+        jenkinsServer("org.jenkins-ci.plugins","git", "5.0.2")
+        jenkinsServer("org.jenkins-ci.plugins","junit", "1202.v79a_986785076")
         jenkinsServer("org.jenkins-ci.plugins","copyartifact", "698.v393f578eb_ddc")
     }
 
@@ -39,8 +39,8 @@ jenkinsPlugin {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.9.1")
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.9.1")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.9.3")
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.9.3")
 }
 
 tasks.test {
