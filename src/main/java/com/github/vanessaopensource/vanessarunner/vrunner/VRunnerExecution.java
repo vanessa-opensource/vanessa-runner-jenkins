@@ -1,4 +1,4 @@
-package com.github.vanessaopensource.vanessarunner.steps.core;
+package com.github.vanessaopensource.vanessarunner.vrunner;
 
 import lombok.val;
 import org.jenkinsci.plugins.workflow.steps.StepContext;

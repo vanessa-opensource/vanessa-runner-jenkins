@@ -1,6 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
+import com.github.vanessaopensource.vanessarunner.vrunner.VRunner;
 import com.google.common.base.Joiner;
 import lombok.val;
 import org.kohsuke.stapler.ClassDescriptor;

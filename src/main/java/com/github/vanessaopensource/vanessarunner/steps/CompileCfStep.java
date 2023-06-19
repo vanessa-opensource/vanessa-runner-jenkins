@@ -1,9 +1,9 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.Compile;
-import com.github.vanessaopensource.vanessarunner.steps.core.Messages;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunner;
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.vrunner.Compile;
+import com.github.vanessaopensource.vanessarunner.vrunner.Messages;
+import com.github.vanessaopensource.vanessarunner.vrunner.VRunner;
+import com.github.vanessaopensource.vanessarunner.vrunner.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;

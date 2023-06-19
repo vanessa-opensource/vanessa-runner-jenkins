@@ -1,6 +1,6 @@
 package com.github.vanessaopensource.vanessarunner.steps;
 
-import com.github.vanessaopensource.vanessarunner.steps.core.VRunnerContext;
+import com.github.vanessaopensource.vanessarunner.vrunner.VRunnerContext;
 
 @SuppressWarnings("unused")
 public enum SyntaxCheckMode {

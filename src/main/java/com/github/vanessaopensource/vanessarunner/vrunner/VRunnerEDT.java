@@ -1,4 +1,4 @@
-package com.github.vanessaopensource.vanessarunner.steps.core;
+package com.github.vanessaopensource.vanessarunner.vrunner;
 
 import hudson.AbortException;
 import lombok.Getter;
