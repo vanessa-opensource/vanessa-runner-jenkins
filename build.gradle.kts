@@ -9,24 +9,24 @@ repositories {
 }
 
 jenkinsPlugin {
-    setProperty("jenkinsVersion", "2.387")
+    setProperty("jenkinsVersion", "2.401")
 
     displayName = "Vanessa-runner tool support"
     gitHubUrl = "https://github.com/vanessa-opensource/vanessa-runner-jenkins"
 
     dependencies {
         implementation("org.jenkins-ci.plugins.workflow", "workflow-step-api", "639.v6eca_cd8c04a_a_")
-        implementation("org.jenkins-ci.plugins", "credentials", "1224.vc23ca_a_9a_2cb_0")
+        implementation("org.jenkins-ci.plugins", "credentials", "1254.vb_96f366e7b_a_d")
 
         testImplementation("org.jenkins-ci.plugins.workflow", "workflow-basic-steps", "1017.vb_45b_302f0cea_")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3659.v582dc37621d8")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1246.v5524618ea_097")
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1292.v27d8cc3e2602")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3691.v28b_14c465a_b_b_")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1247.v7f9dfea_b_4fd0")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1308.v58d48a_763b_31")
 
-        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2131.vb_9788088fdb_5")
-        jenkinsServer("org.jenkins-ci.plugins","git", "5.0.2")
-        jenkinsServer("org.jenkins-ci.plugins","junit", "1202.v79a_986785076")
-        jenkinsServer("org.jenkins-ci.plugins","copyartifact", "698.v393f578eb_ddc")
+        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2141.v5402e818a_779")
+        jenkinsServer("org.jenkins-ci.plugins","git", "5.1.0")
+        jenkinsServer("org.jenkins-ci.plugins","junit", "1207.va_09d5100410f")
+        jenkinsServer("org.jenkins-ci.plugins","copyartifact", "705.v5295cffec284")
     }
 
     gitVersion {
