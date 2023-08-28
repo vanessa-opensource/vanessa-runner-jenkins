@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package com.github.vanessaopensource.vanessarunner.config;
+
+import javax.annotation.ParametersAreNonnullByDefault;

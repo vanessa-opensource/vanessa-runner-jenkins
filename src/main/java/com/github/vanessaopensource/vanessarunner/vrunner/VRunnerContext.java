@@ -2,26 +2,24 @@ package com.github.vanessaopensource.vanessarunner.vrunner;
 
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.github.vanessaopensource.vanessarunner.config.VRunnerToolInstallation;
 import com.google.common.collect.ImmutableSet;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import hudson.AbortException;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.Launcher;
+import hudson.*;
+import hudson.model.Node;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.slaves.WorkspaceList;
 import hudson.util.ArgumentListBuilder;
 import hudson.util.Secret;
+import jenkins.model.Jenkins;
 import lombok.val;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public final class VRunnerContext {
 
@@ -34,6 +32,7 @@ public final class VRunnerContext {
     private final FilePath workSpace;
     private final TaskListener listener;
     private final Run<?, ?> run;
+    private final Node node;
     private final FilePath tempDir;
 
     @NonNull
@@ -49,6 +48,7 @@ public final class VRunnerContext {
         workSpace = Objects.requireNonNull(stepContext.get(FilePath.class));
         listener = Objects.requireNonNull(stepContext.get(TaskListener.class));
         run = Objects.requireNonNull(stepContext.get(Run.class));
+        node = Objects.requireNonNull(stepContext.get(Node.class));
 
         val workSpaceTmp = WorkspaceList.tempDir(workSpace);
         assert workSpaceTmp != null;
@@ -153,31 +153,60 @@ public final class VRunnerContext {
         tempDir.deleteRecursive();
     }
 
-    public Launcher.ProcStarter createStarter() {
+    public Launcher.ProcStarter createStarter() throws IOException, InterruptedException {
 
         val launcherArgs = launcherArgs();
         launcherArgs.add(args.toList());
 
         return launcher.launch().cmds(launcherArgs)
+                .quiet(true)
                 .pwd(workSpace)
                 .envs(env)
                 .stdout(listener)
                 .stderr(listener.getLogger());
     }
 
+    private String getVRunnerLocation(final VRunnerToolInstallation installation) throws IOException, InterruptedException {
+        val tool = installation.translate(node, env, listener);
+        return tool.getHome() + "/vrunner";
+    }
+
+    @CheckForNull
+    private VRunnerToolInstallation getInstallation() {
+
+        val jenkinsInstance = Jenkins.get();
+        val descriptor = (VRunnerToolInstallation.DescriptorImpl) Objects.requireNonNull(
+                jenkinsInstance.getDescriptor(VRunnerToolInstallation.class));
+
+        val installations = descriptor.getInstallations();
+        if (installations != null && installations.length > 0) {
+            return installations[0];
+        } else {
+            return null;
+        }
+    }
+
     @NonNull
-    private ArgumentListBuilder launcherArgs() {
+    private ArgumentListBuilder launcherArgs() throws IOException, InterruptedException {
+
+        val installation = getInstallation();
 
         val launcherArgs = new ArgumentListBuilder();
         if (launcher.isUnix()) {
-            launcherArgs.add("vrunner");
+            if (installation == null) {
+                launcherArgs.addTokenized("vrunner");
+            } else {
+                launcherArgs.addQuoted(getVRunnerLocation(installation));
+            }
         } else {
             launcherArgs.add("cmd.exe");
             launcherArgs.add("/C");
-            launcherArgs.add("chcp");
-            launcherArgs.add("65001");
-            launcherArgs.add("&&");
-            launcherArgs.add("vrunner");
+
+            if (installation == null) {
+                launcherArgs.addTokenized("chcp 65001 && vrunner");
+            } else {
+                launcherArgs.add(getVRunnerLocation(installation));
+            }
         }
 
         return launcherArgs;
