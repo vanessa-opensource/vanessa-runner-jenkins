@@ -55,6 +55,12 @@ dependencies {
     compileOnly("org.checkerframework:checker-qual:3.33.0")
     annotationProcessor("org.checkerframework:checker-qual:3.33.0")
 
+    generatedJenkinsTestImplementation("org.checkerframework:checker-qual:3.33.0")
+    generatedJenkinsTestImplementation("com.google.j2objc:j2objc-annotations:2.8")
+    testCompileOnly("org.checkerframework:checker-qual:3.33.0")
+    testImplementation("com.google.j2objc:j2objc-annotations:2.8")
+    testImplementation("org.checkerframework:checker-qual:3.33.0")
+
     testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.10.0")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.10.0")
 }
