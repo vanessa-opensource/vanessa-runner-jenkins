@@ -32,7 +32,7 @@ public abstract class VRunnerInfobase extends VRunnerPlatform {
     private String ucCode = "";
 
     @DataBoundSetter
-    private Boolean noCacheUse = false;
+    private Boolean noCacheUse = true;
 
     @DataBoundSetter
     private String additional = "";
