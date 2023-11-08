@@ -10,4 +10,7 @@ public abstract class Load extends VRunnerInfobase {
 
     @DataBoundSetter
     private String file = "";
+
+    @DataBoundSetter
+    private Boolean ibcmd = false;
 }

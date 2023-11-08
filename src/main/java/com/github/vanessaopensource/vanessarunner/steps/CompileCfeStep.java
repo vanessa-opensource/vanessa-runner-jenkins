@@ -21,6 +21,7 @@ public final class CompileCfeStep extends Compile {
         context.setCommand("compileexttocfe");
         context.addParameter(getSrc(), "--src");
         context.addParameter(getOut(), "--out");
+        context.addSwitch(getIbcmd(), "--ibcmd");
 
         super.setCommandContext(context);
     }

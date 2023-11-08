@@ -21,6 +21,7 @@ public final class CompileCfStep extends Compile {
         context.setCommand("compile");
         context.addParameter(getSrc(), "--src");
         context.addParameter(getOut(), "--out");
+        context.addSwitch(getIbcmd(), "--ibcmd");
 
         super.setCommandContext(context);
     }

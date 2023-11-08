@@ -46,6 +46,9 @@ public final class InitDevStep extends VRunnerInfobase {
     @DataBoundSetter
     private Boolean v2 = false;
 
+    @DataBoundSetter
+    private Boolean ibcmd = false;
+
     @DataBoundConstructor
     public InitDevStep() {
         super();
@@ -63,6 +66,7 @@ public final class InitDevStep extends VRunnerInfobase {
         context.addParameter(storageVer, "--storage-ver");
         context.addSwitch(v1, "--v1");
         context.addSwitch(v2, "--v2");
+        context.addSwitch(ibcmd, "--ibcmd");
 
         context.addCredentialsEnv(storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
 

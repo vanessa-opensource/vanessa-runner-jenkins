@@ -46,6 +46,7 @@ public final class LoadCfeStep extends Load {
         context.addParameter(getFile(), "--file");
         context.addParameter(extension, "--extension");
         context.addSwitch(updateDb, "--updatedb");
+        context.addSwitch(getIbcmd(), "--ibcmd");
     }
 
     private void setLoadCfeSrcContext(final VRunnerContext context) {
@@ -53,6 +54,7 @@ public final class LoadCfeStep extends Load {
         context.setCommand(src);
         context.setCommand(extension);
         context.addSwitch(updateDb, "--updatedb");
+        context.addSwitch(getIbcmd(), "--ibcmd");
     }
 
     @Extension

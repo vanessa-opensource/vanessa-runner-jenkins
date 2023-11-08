@@ -25,6 +25,9 @@ public abstract class Compile extends VRunnerInfobase {
     @DataBoundSetter
     private Boolean withBuildNumber = false;
 
+    @DataBoundSetter
+    private Boolean ibcmd = false;
+
     /**
      * {@inheritDoc}
      */

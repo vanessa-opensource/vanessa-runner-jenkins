@@ -28,6 +28,9 @@ public final class UpdateDbStep extends VRunnerInfobase {
     @DataBoundSetter
     private Boolean dynamic = false;
 
+    @DataBoundSetter
+    private Boolean ibcmd = false;
+
     @DataBoundConstructor
     public UpdateDbStep() {
         super();
@@ -49,11 +52,13 @@ public final class UpdateDbStep extends VRunnerInfobase {
         context.addSwitch(v1, "--v1");
         context.addSwitch(v2, "--v2");
         context.addSwitch(dynamic, "--dynamic");
+        context.addSwitch(ibcmd, "--ibcmd");
     }
 
     private void setUpdateDbCfeContext(final VRunnerContext context) {
         context.setCommand("updateext");
         context.setCommand(extension);
+        context.addSwitch(ibcmd, "--ibcmd");
     }
 
     @Extension
