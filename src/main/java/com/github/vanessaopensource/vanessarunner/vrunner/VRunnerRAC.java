@@ -35,6 +35,7 @@ public abstract class VRunnerRAC extends VRunnerPlatform {
      */
     @Override
     public void setCommandContext(final VRunnerContext context) throws AbortException {
+        context.setNonInteractive();
         context.addParameter(rasHostPort(), "--ras");
         context.addParameter(dbName, "--db");
         context.addCredentialsEnv(clusterCredentialsID, VRunner.ENV_CLUSTER_USER, VRunner.ENV_CLUSTER_PWD);

@@ -27,7 +27,7 @@ public abstract class VRunnerEDT extends VRunner {
      */
     @Override
     public void setCommandContext(final VRunnerContext context) throws AbortException {
-
+        context.setNonInteractive();
         context.addParameter(version, "--EDTversion");
         addWorkspaceLocation(context);
 

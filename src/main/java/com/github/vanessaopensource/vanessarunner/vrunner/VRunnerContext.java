@@ -35,6 +35,8 @@ public final class VRunnerContext {
     private final Node node;
     private final FilePath tempDir;
 
+    private Boolean isInteractive = true;
+
     @NonNull
     public static Set<? extends Class<?>> getRequiredContext() {
         return ImmutableSet.of(Launcher.class, EnvVars.class, FilePath.class,
@@ -129,6 +131,10 @@ public final class VRunnerContext {
         }
     }
 
+    public void setNonInteractive() {
+        isInteractive = false;
+    }
+
     public FilePath createTempFile(final String prefix, final String suffix) throws AbortException {
         try {
             return tempDir.createTempFile(prefix, suffix);
@@ -193,6 +199,10 @@ public final class VRunnerContext {
 
         val launcherArgs = new ArgumentListBuilder();
         if (launcher.isUnix()) {
+            if (isInteractive) {
+                launcherArgs.addTokenized("xvfb-run -a");
+            }
+
             if (installation == null) {
                 launcherArgs.addTokenized("vrunner");
             } else {
