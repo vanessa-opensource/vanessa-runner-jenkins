@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.jenkins-ci.jpi") version "0.49.0"
+    id("org.jenkins-ci.jpi") version "0.51.0"
     id("io.franzbecker.gradle-lombok") version "5.0.0"
 }
 
@@ -9,34 +9,34 @@ repositories {
 }
 
 jenkinsPlugin {
-    setProperty("jenkinsVersion", "2.414")
+    setProperty("jenkinsVersion", "2.452")
 
     displayName = "Vanessa-runner tool support"
-    gitHubUrl = "https://github.com/vanessa-opensource/vanessa-runner-jenkins"
+    gitHub = uri("https://github.com/vanessa-opensource/vanessa-runner-jenkins")
 
     dependencies {
         // https://plugins.jenkins.io/workflow-step-api/
-        implementation("org.jenkins-ci.plugins.workflow", "workflow-step-api", "639.v6eca_cd8c04a_a_")
+        implementation("org.jenkins-ci.plugins.workflow", "workflow-step-api", "678.v3ee58b_469476")
         // https://plugins.jenkins.io/credentials/
-        implementation("org.jenkins-ci.plugins", "credentials", "1271.v54b_1c2c6388a_")
+        implementation("org.jenkins-ci.plugins", "credentials", "1371.vfee6b_095f0a_3")
 
         // https://plugins.jenkins.io/workflow-basic-steps/
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-basic-steps", "1042.ve7b_140c4a_e0c")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-basic-steps", "1058.vcb_fc1e3a_21a_9")
         // https://plugins.jenkins.io/workflow-cps/
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3773.v505e0052522c")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-cps", "3908.vd6b_b_5a_a_54010")
         // https://plugins.jenkins.io/workflow-durable-task-step/
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1289.v4d3e7b_01546b_")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-durable-task-step", "1360.v82d13453da_a_f")
         // https://plugins.jenkins.io/workflow-job/
-        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1341.vd9fa_65f771dd")
+        testImplementation("org.jenkins-ci.plugins.workflow", "workflow-job", "1400.v7fd111b_ec82f")
 
         // https://plugins.jenkins.io/pipeline-model-definition/
-        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2144.v077a_d1928a_40")
+        jenkinsServer("org.jenkinsci.plugins","pipeline-model-definition", "2.2205.vc9522a_9d5711")
         // https://plugins.jenkins.io/git/
         jenkinsServer("org.jenkins-ci.plugins","git", "5.2.0")
         // https://plugins.jenkins.io/junit/
-        jenkinsServer("org.jenkins-ci.plugins","junit", "1217.v4297208a_a_b_ce")
+        jenkinsServer("org.jenkins-ci.plugins","junit", "1240.vf9529b_881428")
         // https://plugins.jenkins.io/copyartifact/
-        jenkinsServer("org.jenkins-ci.plugins","copyartifact", "714.v28a_34f8c563f")
+        jenkinsServer("org.jenkins-ci.plugins","copyartifact", "722.v0662a_9b_e22a_c")
     }
 
     gitVersion {
