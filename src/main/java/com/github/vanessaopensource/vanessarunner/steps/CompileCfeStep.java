@@ -8,8 +8,12 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public final class CompileCfeStep extends Compile {
+
+    @DataBoundSetter
+    private Boolean ibcmd = false;
 
     @DataBoundConstructor
     public CompileCfeStep() {
@@ -21,7 +25,11 @@ public final class CompileCfeStep extends Compile {
         context.setCommand("compileexttocfe");
         context.addParameter(getSrc(), "--src");
         context.addParameter(getOut(), "--out");
-        context.addSwitch(getIbcmd(), "--ibcmd");
+        context.addSwitch(ibcmd, "--ibcmd");
+
+        if(ibcmd) {
+            context.setNonInteractive();
+        }
 
         super.setCommandContext(context);
     }
