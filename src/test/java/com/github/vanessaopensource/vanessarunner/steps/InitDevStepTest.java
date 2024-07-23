@@ -17,6 +17,7 @@ public class InitDevStepTest {
         val step = new InitDevStep();
         step.setSrc("src/cf");
         step.setNoCacheUse(true);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -24,9 +25,8 @@ public class InitDevStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Загрузка конфигурации из файлов успешно завершена", run);
-        j.assertLogContains("Обновление конфигурации БД завершено", run);
-        j.assertLogContains("Database configuration successfully updated", run);
+        j.assertLogContains("оздана информационная база из исходников.", run);
+        j.assertLogContains("Обновление конфигурации базы данных завершено.", run);
         r.assertChildFileExists("build/ib", run);
     }
 
@@ -39,6 +39,7 @@ public class InitDevStepTest {
         step.setSrc("src/cf");
         step.setDev(true);
         step.setNoCacheUse(true);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -46,8 +47,8 @@ public class InitDevStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Загрузка конфигурации из файлов успешно завершена", run);
-        j.assertLogNotContains("Запускаю обновление конфигурации БД", run);
+        j.assertLogContains("оздана информационная база из исходников.", run);
+        j.assertLogContains("Обновление конфигурации базы данных завершено.", run);
         r.assertChildFileExists("build/ibservice/1Cv8.1CD", run);
     }
 
@@ -60,6 +61,7 @@ public class InitDevStepTest {
         step.setSrc("src/cf");
         step.setIbConnection("/Fbuild/base1");
         step.setNoCacheUse(true);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -67,9 +69,8 @@ public class InitDevStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Загрузка конфигурации из файлов успешно завершена", run);
-        j.assertLogContains("Обновление конфигурации БД завершено", run);
-        j.assertLogContains("Database configuration successfully updated", run);
+        j.assertLogContains("Создана информационная база из исходников.", run);
+        j.assertLogContains("Обновление конфигурации базы данных завершено.", run);
         r.assertChildFileExists("build/base1", run);
     }
 
@@ -81,6 +82,7 @@ public class InitDevStepTest {
         val step = new InitDevStep();
         step.setDt("bin/1Cv8.dt");
         step.setNoCacheUse(true);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -88,8 +90,7 @@ public class InitDevStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Загружаем dt", run);
-        j.assertLogContains("Обновление конфигурации БД завершено", run);
+        j.assertLogContains("Создана информационная база из файла выгрузки.", run);
         r.assertChildFileExists("build/ib", run);
     }
 

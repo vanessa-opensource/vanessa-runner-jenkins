@@ -68,6 +68,10 @@ public final class InitDevStep extends VRunnerInfobase {
         context.addSwitch(v2, "--v2");
         context.addSwitch(ibcmd, "--ibcmd");
 
+        if(ibcmd) {
+            context.setNonInteractive();
+        }
+
         context.addCredentialsEnv(storageCredentialsID, VRunner.ENV_STORAGE_USER, VRunner.ENV_STORAGE_PWD);
 
         super.setCommandContext(context);

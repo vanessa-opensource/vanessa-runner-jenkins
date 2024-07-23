@@ -18,6 +18,7 @@ public class CompileCfeStepTest {
         step.setSrc("src/cfe");
         step.setOut("1cv8_$version.cfe");
         step.setBuildNumber(9999);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -25,8 +26,7 @@ public class CompileCfeStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Выгрузка в файл завершена.", run);
-        j.assertLogContains("Configuration successfully saved", run);
+        j.assertLogContains("Сборка расширения из исходников в файл cfe завершена.", run);
         r.assertChildFileExists("1cv8_1.1.0.9999.cfe", run);
     }
 
@@ -39,6 +39,7 @@ public class CompileCfeStepTest {
         step.setSrc("src/cfe");
         step.setOut("1cv8_$version.cfe");
         step.setWithBuildNumber(true);
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -46,8 +47,7 @@ public class CompileCfeStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Выгрузка в файл завершена.", run);
-        j.assertLogContains("Configuration successfully saved", run);
+        j.assertLogContains("Сборка расширения из исходников в файл cfe завершена.", run);
         r.assertChildFileExists("1cv8_1.1.0.1.cfe", run);
     }
 }

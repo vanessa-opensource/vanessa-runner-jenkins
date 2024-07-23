@@ -7,9 +7,13 @@ import com.github.vanessaopensource.vanessarunner.vrunner.VRunnerContext;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
+import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public final class CompileCfeStep extends Compile {
 
     @DataBoundSetter

@@ -21,7 +21,6 @@ public final class LoadCfStep extends Load {
 
         context.setCommand("load");
         context.addParameter(getFile(), "--src");
-        context.addSwitch(getIbcmd(), "--ibcmd");
 
         super.setCommandContext(context);
     }

@@ -17,6 +17,7 @@ public class LoadCfStepTest {
         val step = new LoadCfStep();
         step.setFile("bin/1cv8.cf");
         step.setIbConnection("/Fbuild/ib");
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -24,6 +25,6 @@ public class LoadCfStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("ИНФОРМАЦИЯ - Загрузка конфигурации из файла cf успешно завершена!", run);
+        j.assertLogContains("Загрузка конфигурации из cf завершена.", run);
     }
 }

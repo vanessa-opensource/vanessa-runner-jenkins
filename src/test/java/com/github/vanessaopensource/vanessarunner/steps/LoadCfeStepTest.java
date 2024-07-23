@@ -18,6 +18,7 @@ public class LoadCfeStepTest {
         step.setFile("bin/1cv8.cfe");
         step.setExtension("Extension1");
         step.setIbConnection("/Fbuild/ib");
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -25,7 +26,7 @@ public class LoadCfeStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("ИНФОРМАЦИЯ - Загрузка расширения из cfe-файла успешно завершена!", run);
+        j.assertLogContains("Загрузка расширения из cfe завершена.", run);
     }
 
     @Test
@@ -37,6 +38,7 @@ public class LoadCfeStepTest {
         step.setSrc("src/cfe");
         step.setExtension("Extension1");
         step.setIbConnection("/Fbuild/ib");
+        step.setIbcmd(true);
         step.setLanguage("en");
 
         // when
@@ -44,6 +46,6 @@ public class LoadCfeStepTest {
 
         // then
         j.assertBuildStatus(Result.SUCCESS, run);
-        j.assertLogContains("Сборка/загрузка расширения Extension1 завершена", run);
+        j.assertLogContains("Сборка расширения Extension1 из исходников завершена.", run);
     }
 }
