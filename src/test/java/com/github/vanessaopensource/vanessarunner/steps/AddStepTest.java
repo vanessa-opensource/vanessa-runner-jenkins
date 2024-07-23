@@ -16,6 +16,7 @@ class AddStepTest {
         // given
         val step = new AddStep();
         step.setTestsPath("features/addOK.feature");
+        step.setVanessasettings("features/vb-conf.json");
         step.setReportAllure("build/allure");
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");
@@ -36,6 +37,7 @@ class AddStepTest {
         // given
         val step = new AddStep();
         step.setTestsPath("features/addFail.feature");
+        step.setVanessasettings("features/vb-conf.json");
         step.setReportJUnit("build/junit");
         step.setIbConnection("/Fbuild/ib");
         step.setLanguage("en");

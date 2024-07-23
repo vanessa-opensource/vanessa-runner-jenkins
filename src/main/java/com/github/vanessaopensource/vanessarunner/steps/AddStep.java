@@ -8,9 +8,17 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.AbortException;
 import hudson.Extension;
 import hudson.model.Result;
+import lombok.Getter;
+import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
+@Getter
+@Setter
 public final class AddStep extends RunTests {
+
+    @DataBoundSetter
+    private String vanessasettings = "";
 
     @DataBoundConstructor
     public AddStep() {
@@ -24,6 +32,7 @@ public final class AddStep extends RunTests {
         context.putExitCodeResult(2, Result.UNSTABLE);
 
         context.setCommand("vanessa");
+        context.addParameter(vanessasettings, "--vanessasettings");
         context.addParameter(getTestsPath(), "--path");
 
         setReportEnv(context, getReportAllure(), "allurecreatereport", "allurepath");
